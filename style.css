@@ -86,18 +86,28 @@ body {
 
 /* Typography styles */
 h1.hero-title {
-  font-size: clamp(4rem, 10vw, 8rem);
+  font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  margin-bottom: 0.2em;
+  margin-bottom: 0;
   line-height: 1.1;
+  text-align: center;
 }
 
-h2.hero-subtitle {
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: 400;
+.hero-bottom-bar {
+  position: absolute;
+  bottom: var(--slide-padding);
+  left: var(--slide-padding);
+  right: var(--slide-padding);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  font-size: clamp(0.9rem, 1.5vw, 1.2rem);
   color: var(--text-muted);
-  margin-bottom: 0.5em;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  width: calc(100% - calc(var(--slide-padding) * 2));
 }
 
 .accent-dot {
@@ -108,78 +118,56 @@ h2.hero-subtitle {
   color: var(--accent);
 }
 
-.hero-description {
-  font-size: clamp(1.2rem, 2vw, 1.8rem);
-  max-width: 600px;
-  color: var(--text-muted);
-  font-weight: 300;
-}
-
-/* Slide 2: Designer Intro Layout */
-.designer-intro-layout {
-  display: flex;
-  flex-direction: column;
-  gap: 3rem;
-  max-width: 1000px;
-}
-
-.statement-title {
-  font-size: clamp(3rem, 6vw, 5.5rem);
-  font-weight: 500;
-  letter-spacing: -0.03em;
-  line-height: 1.1;
-  color: var(--text-main);
-}
-
-.intro-details {
+/* Slide 2: Introduction Layout */
+.intro-left-panel {
   display: flex;
   flex-direction: column;
   gap: 2rem;
-  padding-top: 2rem;
-  border-top: 1px solid color-mix(in srgb, var(--color-secondary) 10%, transparent);
 }
 
-@media (min-width: 768px) {
-  .intro-details {
-    flex-direction: row;
-    gap: 4rem;
-    justify-content: space-between;
-  }
+.intro-greeting {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  color: var(--text-main);
+  line-height: 1.1;
 }
 
-.designer-paragraph {
-  font-size: clamp(1.1rem, 2vw, 1.4rem);
+.intro-sentence {
+  font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 300;
   color: var(--text-muted);
-  line-height: 1.6;
-  flex: 1;
-  max-width: 500px;
+  line-height: 1.5;
 }
 
-.designer-stats {
+.edu-experience {
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
-  min-width: 250px;
+  gap: 2rem;
+  margin-top: 1rem;
 }
 
-.stat {
-  display: flex;
-  flex-direction: column;
-}
-
-.stat-num {
-  font-size: 1.5rem;
-  font-weight: 600;
-  color: var(--text-main);
-  margin-bottom: 0.2rem;
-}
-
-.stat-label {
-  font-size: 0.9rem;
-  color: var(--text-muted);
+.resume-section h3 {
+  font-size: 1rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  padding-bottom: 0.5rem;
+}
+
+.resume-section ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.resume-section li {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  font-weight: 400;
 }
 
 /* Project Slides Layout */
@@ -338,6 +326,44 @@ h2.hero-subtitle {
   color: var(--text-main);
   font-weight: 500;
 }
+
+/* Project Details Layout */
+.project-details-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  width: 100%;
+}
+
+@media (min-width: 900px) {
+  .project-details-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: start;
+  }
+}
+
+.details-column {
+  display: flex;
+  flex-direction: column;
+}
+
+.details-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.details-text {
+  font-size: 1rem;
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.mt-2 { margin-top: 2rem; }
+.mb-2 { margin-bottom: 2rem; }
 
 /* Outro Slide */
 .outro-title {
