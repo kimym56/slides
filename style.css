@@ -94,20 +94,23 @@ h1.hero-title {
   text-align: center;
 }
 
-.hero-bottom-bar {
-  position: absolute;
-  bottom: var(--slide-padding);
-  left: var(--slide-padding);
-  right: var(--slide-padding);
+.hero-center-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-subtext {
   display: flex;
   justify-content: space-between;
-  align-items: flex-end;
+  width: 100%;
+  margin-top: 0.5rem;
   font-size: clamp(0.9rem, 1.5vw, 1.2rem);
   color: var(--text-muted);
   font-weight: 500;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  width: calc(100% - calc(var(--slide-padding) * 2));
+  text-transform: none;
+  letter-spacing: 0.02em;
+  padding: 0 0.2rem;
 }
 
 .accent-dot {
