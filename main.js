@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnNext = document.getElementById('btn-next');
   const counter = document.getElementById('slide-counter');
   const progressFill = document.getElementById('progress-indicator');
+  const sectionLabel = document.getElementById('current-section');
   
   let currentSlide = 0;
   const totalSlides = slides.length;
@@ -12,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
     slides.forEach((slide, index) => {
       if (index === currentSlide) {
         slide.classList.add('active');
+        sectionLabel.textContent = slide.getAttribute('data-title') || '';
         // Manage z-index logic if we want fancy overlapping
       } else {
         slide.classList.remove('active');
