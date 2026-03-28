@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const counter = document.getElementById('slide-counter');
   const progressFill = document.getElementById('progress-indicator');
   const sectionLabel = document.getElementById('current-section');
+  const keyboardHelp = document.querySelector('.keyboard-help');
   
   let currentSlide = 0;
   const totalSlides = slides.length;
@@ -26,6 +27,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     btnPrev.disabled = currentSlide === 0;
     btnNext.disabled = currentSlide === totalSlides - 1;
+
+    if (keyboardHelp) {
+      if (currentSlide >= 2) {
+        keyboardHelp.classList.add('hidden');
+      } else {
+        keyboardHelp.classList.remove('hidden');
+      }
+    }
   }
 
   function nextSlide() {
@@ -47,12 +56,28 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Keyboard navigation
   document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowRight' || e.key === 'Space') {
+    if (e.key === 'ArrowRight' || e.key === ' ' || e.code === 'Space' || e.key === '>') {
       nextSlide();
-    } else if (e.key === 'ArrowLeft') {
+    } else if (e.key === 'ArrowLeft' || e.key === '<') {
       prevSlide();
+    } else if (e.key === 'f' || e.key === 'F') {
+      toggleFullScreen();
     }
   });
+
+  function toggleFullScreen() {
+    if (!document.fullscreenElement) {
+      if (document.documentElement.requestFullscreen) {
+        document.documentElement.requestFullscreen().catch(err => {
+          console.warn(`Error attempting to enable fullscreen: ${err.message}`);
+        });
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  }
 
   // Mouse wheel navigation (with throttle to prevent fast scroll)
   let isScrolling = false;
