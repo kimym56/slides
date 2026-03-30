@@ -226,13 +226,13 @@ h1.hero-title {
   letter-spacing: -0.02em;
   line-height: 1.1;
   color: var(--text-main);
+  white-space: nowrap;
 }
 
 .project-subtitle {
   font-size: 1.2rem;
   font-weight: 500;
   color: var(--text-main);
-  text-transform: uppercase;
   letter-spacing: 0.05em;
   border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 10%, transparent);
   padding-bottom: 0.5rem;
