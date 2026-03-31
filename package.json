@@ -4,11 +4,34 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "sync:mimesis-assets": "node scripts/sync-mimesis-assets.mjs",
+    "dev": "npm run sync:mimesis-assets && vite",
+    "build": "npm run sync:mimesis-assets && vite build",
+    "preview": "vite preview",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.5.0",
+    "framer-motion": "^12.34.3",
+    "lil-gui": "^0.21.0",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "realtime-bpm-analyzer": "^5.0.1",
+    "three": "^0.183.2"
   },
   "devDependencies": {
-    "vite": "^6.0.0"
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.0",
+    "@testing-library/user-event": "^14.6.1",
+    "@types/node": "^24.7.2",
+    "@types/react": "^19.2.2",
+    "@types/react-dom": "^19.2.2",
+    "@types/three": "^0.183.0",
+    "@vitejs/plugin-react": "^5.1.0",
+    "jsdom": "^27.0.1",
+    "typescript": "^5.9.3",
+    "vite": "^6.0.0",
+    "vitest": "^4.0.0"
   }
 }
