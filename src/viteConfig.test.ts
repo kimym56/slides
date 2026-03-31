@@ -1,6 +1,8 @@
 // @vitest-environment node
 
 import path from "node:path";
+import { mkdtempSync, mkdirSync, readFileSync, rmSync, writeFileSync } from "node:fs";
+import { tmpdir } from "node:os";
 import viteConfig from "../vite.config";
 
 function getConfig() {
@@ -8,6 +10,17 @@ function getConfig() {
     ? viteConfig({
         command: "serve",
         mode: "development",
+        isSsrBuild: false,
+        isPreview: false,
+      })
+    : viteConfig;
+}
+
+function getBuildConfig() {
+  return typeof viteConfig === "function"
+    ? viteConfig({
+        command: "build",
+        mode: "production",
         isSsrBuild: false,
         isPreview: false,
       })
@@ -78,4 +91,41 @@ it("pins the shared runtime entrypoints to slides' node_modules", () => {
   expect(alias.get("react/jsx-dev-runtime")).toBe(
     path.join(slidesNodeModules, "react", "jsx-dev-runtime.js"),
   );
+});
+
+it("emits a static /kr html entry for hosts without SPA rewrites", async () => {
+  const config = getBuildConfig();
+  const plugin = config.plugins?.find(
+    (candidate) => candidate && "name" in candidate && candidate.name === "emit-static-locale-entry-html",
+  );
+
+  expect(plugin).toBeDefined();
+
+  if (!plugin || typeof plugin.closeBundle !== "function") {
+    return;
+  }
+
+  const tempRoot = mkdtempSync(path.join(tmpdir(), "slides-vite-config-"));
+  const distDir = path.join(tempRoot, "dist");
+  const sourceHtml = "<!doctype html><html><body>deck</body></html>";
+
+  try {
+    mkdirSync(distDir, { recursive: true });
+    writeFileSync(path.join(distDir, "index.html"), sourceHtml, "utf8");
+
+    plugin.configResolved?.({
+      root: tempRoot,
+      build: {
+        outDir: "dist",
+      },
+    } as never);
+
+    await plugin.closeBundle.call({} as never);
+
+    expect(
+      readFileSync(path.join(distDir, "kr", "index.html"), "utf8"),
+    ).toBe(sourceHtml);
+  } finally {
+    rmSync(tempRoot, { force: true, recursive: true });
+  }
 });

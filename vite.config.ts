@@ -1,5 +1,5 @@
 import path from "node:path";
-import { existsSync } from "node:fs";
+import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import { configDefaults } from "vitest/config";
@@ -16,8 +16,38 @@ export function resolveMimesisSourceRoot(
     : vendoredMimesisSourceRoot;
 }
 
+function emitStaticLocaleEntryHtml(localeEntries = ["kr"]) {
+  let rootDir = __dirname;
+  let buildOutDir = "dist";
+
+  return {
+    name: "emit-static-locale-entry-html",
+    apply: "build" as const,
+    configResolved(config: { root: string; build: { outDir: string } }) {
+      rootDir = config.root;
+      buildOutDir = config.build.outDir;
+    },
+    closeBundle() {
+      const distRoot = path.resolve(rootDir, buildOutDir);
+      const sourceIndexPath = path.join(distRoot, "index.html");
+
+      if (!existsSync(sourceIndexPath)) {
+        return;
+      }
+
+      const sourceIndexHtml = readFileSync(sourceIndexPath, "utf8");
+
+      for (const localeEntry of localeEntries) {
+        const localeIndexPath = path.join(distRoot, localeEntry, "index.html");
+        mkdirSync(path.dirname(localeIndexPath), { recursive: true });
+        writeFileSync(localeIndexPath, sourceIndexHtml, "utf8");
+      }
+    },
+  };
+}
+
 export default defineConfig(({ mode }) => ({
-  plugins: [react()],
+  plugins: [react(), emitStaticLocaleEntryHtml()],
   resolve: {
     dedupe: [
       "react",
