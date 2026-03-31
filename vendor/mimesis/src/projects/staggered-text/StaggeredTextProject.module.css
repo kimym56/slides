@@ -1,0 +1,385 @@
+.projectShell {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 2vw, 1rem);
+  min-height: var(--project-mobile-pane-min-height, 40vh);
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.modeToggle {
+  display: flex;
+  gap: 0.25rem;
+  align-self: flex-start;
+  background: var(--border);
+  border-radius: var(--radius-soft);
+  padding: 2px;
+}
+
+.modeButton {
+  padding: 6px 16px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--foreground-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-soft);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.modeButton:hover {
+  color: var(--foreground);
+}
+
+.modeButtonActive {
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+.previewFrame {
+  flex: 1;
+  display: flex;
+  min-height: 0;
+}
+
+.previewInstruction {
+  position: absolute;
+  top: clamp(0.9rem, 2vw, 1.25rem);
+  right: clamp(1rem, 2vw, 1.4rem);
+  z-index: 3;
+  margin: 0;
+  color: #f4f7ff;
+  font-size: 0.68rem;
+  font-weight: var(--font-medium);
+  letter-spacing: 0.16em;
+  line-height: 1;
+  text-transform: uppercase;
+  pointer-events: none;
+  user-select: none;
+  text-shadow: 0 0 0.01em currentColor;
+}
+
+.previewInstructionButton {
+  top: clamp(1rem, 2vw, 1.4rem);
+}
+
+.interactivePane {
+  flex: 1;
+  display: flex;
+  min-height: var(--project-mobile-pane-min-height, 40vh);
+}
+
+.buttonModePane {
+  position: relative;
+  flex-direction: column;
+}
+
+.textInputRow {
+  display: block;
+  position: relative;
+}
+
+.textInputRow::after {
+  content: "";
+  display: block;
+  width: 50%;
+  height: 1px;
+  margin-top: 0.06rem;
+  background: rgba(244, 247, 255, 0.28);
+  transition: background-color var(--transition-base);
+}
+
+.textInputOverlay {
+  position: absolute;
+  top: clamp(1rem, 2vw, 1.4rem);
+  left: clamp(1rem, 2vw, 1.4rem);
+  right: clamp(1rem, 2vw, 1.4rem);
+  z-index: 2;
+  max-width: min(22rem, calc(100% - clamp(2rem, 4vw, 2.8rem)));
+}
+
+.textInput {
+  width: 100%;
+  padding: 0.5rem 0 0.28rem;
+  border: none;
+  border-radius: 0;
+  background: transparent;
+  color: rgba(244, 247, 255, 0.9);
+  caret-color: #f4f7ff;
+  font: inherit;
+  font-size: 1rem;
+  line-height: 1.25;
+  transition:
+    border-color var(--transition-base),
+    background-color var(--transition-base),
+    color var(--transition-base);
+}
+
+.textInput::placeholder {
+  color: rgba(244, 247, 255, 0.42);
+}
+
+.textInputRow:hover::after {
+  background: rgba(244, 247, 255, 0.42);
+}
+
+.textInput:focus {
+  outline: none;
+  background: transparent;
+  color: #f4f7ff;
+}
+
+.textInputRow:focus-within::after {
+  background: rgba(244, 247, 255, 0.76);
+}
+
+@media (min-width: 1024px) {
+  .projectShell {
+    min-height: 0;
+    height: 100%;
+  }
+
+  .interactivePane {
+    min-height: 0;
+    height: 100%;
+  }
+}
+
+.trigger {
+  position: relative;
+  flex: 1;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  min-height: 100%;
+  padding: clamp(2rem, 6vw, 4rem);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: var(--radius-soft);
+  background-color: #05070a;
+  background-image:
+    radial-gradient(
+      circle at 50% 42%,
+      rgba(255, 255, 255, 0.03),
+      transparent 36%
+    ),
+    linear-gradient(180deg, rgba(8, 10, 14, 1), rgba(3, 4, 6, 1));
+  color: #f4f7ff;
+  cursor: pointer;
+  overflow: clip;
+  touch-action: manipulation;
+  user-select: none;
+  isolation: isolate;
+  transition: border-color var(--transition-base);
+}
+
+.hoverStage {
+  cursor: pointer;
+}
+
+.buttonStage {
+  min-height: 0;
+  height: 100%;
+}
+
+.trigger[data-active="true"] {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.wordmark {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  perspective: 1600px;
+  font-family: var(--font-schibsted-grotesk), sans-serif;
+  font-size: clamp(1.62rem, 4.35vw, 3.72rem);
+  font-weight: var(--wordmark-font-weight, 700);
+  line-height: 0.92;
+  letter-spacing: var(--wordmark-letter-spacing, -0.022em);
+  font-kerning: normal;
+  text-transform: none;
+  min-height: 2.3em;
+  padding-block: 0.5em 0.62em;
+  max-width: 100%;
+}
+
+.slot,
+.space {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slot {
+  position: relative;
+  height: 1.14em;
+  perspective: 1200px;
+  transform-style: preserve-3d;
+}
+
+.slot + .slot {
+  margin-inline-start: -0.044em;
+}
+
+.slotSizer {
+  display: block;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.outgoingArm,
+.outgoingGlyph,
+.incomingGlyph,
+.shadow {
+  position: absolute;
+  inset: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  will-change: transform, opacity, filter;
+  pointer-events: none;
+}
+
+.outgoingArm {
+  transform-origin: 50% 12%;
+  transition:
+    transform var(--outgoing-duration) var(--ease-custom),
+    opacity var(--outgoing-duration) var(--ease-custom);
+}
+
+.outgoingGlyph {
+  color: #f4f7ff;
+  backface-visibility: hidden;
+  text-shadow: 0 0 0.01em currentColor;
+  opacity: 1;
+  filter: blur(0);
+  transform: translateZ(0.02em);
+  transition:
+    transform var(--outgoing-duration) var(--ease-custom),
+    opacity 720ms var(--ease-custom),
+    filter var(--outgoing-duration) var(--ease-custom);
+}
+
+.incomingGlyph {
+  color: #f4f7ff;
+  backface-visibility: hidden;
+  text-shadow: 0 0 0.01em currentColor;
+  transform-origin: 50% 100%;
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(-0.02em) rotateX(-88deg) translateZ(0);
+  transition:
+    transform var(--incoming-duration) var(--ease-custom),
+    opacity var(--incoming-duration) var(--ease-custom),
+    filter var(--incoming-duration) var(--ease-custom);
+}
+
+.shadow {
+  color: rgba(244, 247, 255, 0.18);
+  opacity: 0;
+  filter: blur(var(--shadow-rest-blur, 12px));
+  transform: translateY(0.28em) scale(1.03);
+  transition:
+    opacity var(--outgoing-duration) var(--ease-custom),
+    transform var(--outgoing-duration) var(--ease-custom),
+    filter var(--outgoing-duration) var(--ease-custom);
+}
+
+.trigger[data-motion-driver="css"][data-active="true"] .outgoingArm {
+  transition-delay: calc(var(--char-index) * var(--outgoing-stagger-step));
+  transform: translateY(-0.12em) rotateX(82deg);
+  opacity: 0.92;
+}
+
+.trigger[data-motion-driver="css"][data-active="true"] .outgoingGlyph {
+  transition-delay: calc(var(--char-index) * var(--outgoing-stagger-step));
+  opacity: 0;
+  filter: blur(8px);
+  transform: translateY(-0.1em) translateZ(0.14em) rotateX(-18deg);
+}
+
+.trigger[data-motion-driver="css"][data-active="true"] .incomingGlyph {
+  transition-delay: calc(
+    var(--char-index) * var(--incoming-stagger-step) + var(--handoff-delay)
+  );
+  opacity: 1;
+  filter: blur(0);
+  transform: translateY(-0.02em) rotateX(0deg) translateZ(0);
+}
+
+.trigger[data-motion-driver="css"][data-active="true"] .shadow {
+  transition-delay: calc(var(--char-index) * var(--outgoing-stagger-step));
+  opacity: var(--shadow-active-opacity, 0.22);
+  filter: blur(var(--shadow-active-blur, 6px));
+  transform: translateY(-0.04em) scale(1.04);
+}
+
+.space {
+  width: 0.27em;
+}
+
+.trigger[data-reduced-motion="true"] .outgoingArm,
+.trigger[data-reduced-motion="true"] .outgoingGlyph,
+.trigger[data-reduced-motion="true"] .incomingGlyph,
+.trigger[data-reduced-motion="true"] .shadow {
+  transition-duration: var(--duration-fast);
+}
+
+.trigger[data-reduced-motion="true"] .outgoingArm,
+.trigger[data-reduced-motion="true"] .outgoingGlyph {
+  transform: none;
+  filter: none;
+}
+
+.trigger[data-reduced-motion="true"] .incomingGlyph,
+.trigger[data-reduced-motion="true"] .shadow {
+  display: none;
+}
+
+.trigger[data-motion-driver="css"][data-reduced-motion="true"][data-active="true"] .outgoingGlyph {
+  text-shadow: 0 0 0.3em rgba(244, 247, 255, 0.16);
+  transform: translateY(-0.03em);
+}
+
+@media (max-width: 767px) {
+  .projectShell {
+    gap: 0.75rem;
+  }
+
+  .modeToggle {
+    width: 100%;
+  }
+
+  .modeButton {
+    flex: 1;
+    justify-content: center;
+  }
+
+  .trigger {
+    padding: var(--space-xl) var(--space-lg);
+  }
+
+  .wordmark {
+    font-size: clamp(1.6rem, 8.7vw, 2.82rem);
+    letter-spacing: var(--wordmark-letter-spacing, -0.02em);
+    min-height: 2.48em;
+    padding-block: 0.58em 0.68em;
+  }
+
+  .textInput {
+    padding: 0.68rem 0.8rem;
+  }
+}

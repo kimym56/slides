@@ -1,8 +1,20 @@
 import path from "node:path";
+import { existsSync } from "node:fs";
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
+import { configDefaults } from "vitest/config";
 
 const slidesNodeModules = path.resolve(__dirname, "./node_modules");
+const siblingMimesisSourceRoot = path.resolve(__dirname, "../mimesis/src");
+const vendoredMimesisSourceRoot = path.resolve(__dirname, "./vendor/mimesis/src");
+
+export function resolveMimesisSourceRoot(
+  siblingCheckoutAvailable = existsSync(siblingMimesisSourceRoot),
+) {
+  return siblingCheckoutAvailable
+    ? siblingMimesisSourceRoot
+    : vendoredMimesisSourceRoot;
+}
 
 export default defineConfig(({ mode }) => ({
   plugins: [react()],
@@ -16,7 +28,7 @@ export default defineConfig(({ mode }) => ({
       "framer-motion",
     ],
     alias: {
-      "@mimesis": path.resolve(__dirname, "../mimesis/src"),
+      "@mimesis": resolveMimesisSourceRoot(),
       "@slides": path.resolve(__dirname, "./src"),
       three: path.join(slidesNodeModules, "three"),
       "@react-three/fiber": path.join(
@@ -67,5 +79,6 @@ export default defineConfig(({ mode }) => ({
     environment: "jsdom",
     globals: true,
     setupFiles: "./src/test/setup.ts",
+    exclude: [...configDefaults.exclude, "vendor/**"],
   },
 }));

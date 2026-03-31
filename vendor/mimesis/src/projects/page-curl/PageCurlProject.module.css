@@ -1,0 +1,122 @@
+.interactivePane {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.modeToggle {
+  display: flex;
+  gap: 2px;
+  align-self: flex-start;
+  background: var(--border);
+  border-radius: var(--radius-soft);
+  padding: 2px;
+  margin-bottom: var(--space-md);
+}
+
+.modeButton {
+  padding: 6px 16px;
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  letter-spacing: var(--tracking-wide);
+  text-transform: uppercase;
+  color: var(--foreground-muted);
+  background: transparent;
+  border: none;
+  border-radius: var(--radius-soft);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.modeButton:hover {
+  color: var(--foreground);
+}
+
+.modeButtonActive {
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: var(--shadow-sm);
+}
+
+.embedWrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
+  min-height: var(--project-mobile-pane-min-height, 40vh);
+}
+
+@media (min-width: 1024px) {
+  .embedWrapper {
+    min-height: 0;
+    height: 100%;
+  }
+}
+
+.curlCanvas {
+  flex: 1;
+  width: 100%;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+}
+
+.curlCanvas:active {
+  cursor: grabbing;
+}
+
+.embedControls {
+  display: flex;
+  flex-direction: row;
+  gap: var(--space-lg);
+  align-items: center;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--surface);
+  border-radius: var(--radius-prominent);
+  box-shadow: var(--shadow-md);
+  align-self: center;
+}
+
+.controlItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-sm);
+}
+
+.controlLabel {
+  font-size: var(--text-xs);
+  font-weight: var(--font-medium);
+  color: var(--foreground-muted);
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-wide);
+  min-width: 48px;
+}
+
+.slider {
+  width: 120px;
+  height: 4px;
+  appearance: none;
+  background: var(--border);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: var(--foreground);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--foreground);
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+}

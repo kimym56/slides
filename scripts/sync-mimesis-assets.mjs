@@ -1,6 +1,6 @@
-import { mkdir, copyFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { syncAssetPair } from "./sync-mimesis-assets-lib.mjs";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -18,6 +18,5 @@ const assetMap = [
 ];
 
 for (const [sourcePath, destinationPath] of assetMap) {
-  await mkdir(path.dirname(destinationPath), { recursive: true });
-  await copyFile(sourcePath, destinationPath);
+  await syncAssetPair(sourcePath, destinationPath);
 }
