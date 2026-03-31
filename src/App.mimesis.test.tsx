@@ -1,6 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { vi } from "vitest";
 import App from "./App";
+import { slides } from "./deck/slideData";
 
 vi.mock("./mimesis/PageCurlSlideDemo", () => ({
   default: () => <div>page-curl-demo</div>,
@@ -44,7 +45,7 @@ it("renders one mimesis demo per detail slide and mounts only the active impleme
 
   expect(document.querySelector("iframe")).toBeNull();
   expect(screen.queryByText("page-curl-demo")).not.toBeInTheDocument();
-  expect(screen.getByText("1 / 12")).toBeInTheDocument();
+  expect(screen.getByText(`1 / ${slides.length}`)).toBeInTheDocument();
 
   fireEvent.keyDown(document, { key: "ArrowRight" });
   fireEvent.keyDown(document, { key: "ArrowRight" });
