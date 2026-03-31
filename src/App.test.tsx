@@ -2,16 +2,16 @@ import { render, screen } from "@testing-library/react";
 import { vi } from "vitest";
 
 vi.mock("./deck/slideData", () => ({
-  slides: [
+  getSlides: (locale: "en" | "ko") => [
     {
       id: "slide-1",
-      render: () => <div>stub slide</div>,
-      title: "Portfolio",
+      render: () => <div>{locale === "ko" ? "테스트 슬라이드" : "stub slide"}</div>,
+      title: locale === "ko" ? "포트폴리오" : "Portfolio",
     },
     {
       id: "slide-2",
-      render: () => <div>second slide</div>,
-      title: "Second",
+      render: () => <div>{locale === "ko" ? "두 번째 슬라이드" : "second slide"}</div>,
+      title: locale === "ko" ? "두 번째" : "Second",
     },
   ],
 }));
@@ -19,9 +19,23 @@ vi.mock("./deck/slideData", () => ({
 import App from "./App";
 
 it("renders the first slide and deck chrome from the React shell", () => {
+  window.history.replaceState({}, "", "/");
+
   render(<App />);
 
   expect(screen.getByText("stub slide")).toBeInTheDocument();
   expect(screen.getByText("Portfolio")).toBeInTheDocument();
   expect(screen.getByText("1 / 2")).toBeInTheDocument();
+});
+
+it("renders Korean deck chrome when pathname ends with /kr", () => {
+  window.history.replaceState({}, "", "/kr");
+
+  render(<App />);
+
+  expect(screen.getByText("테스트 슬라이드")).toBeInTheDocument();
+  expect(screen.getByText("포트폴리오")).toBeInTheDocument();
+  expect(screen.getByLabelText("이전 슬라이드")).toBeInTheDocument();
+  expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
+  expect(screen.getByText(/다음/)).toBeInTheDocument();
 });

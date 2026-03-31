@@ -1,10 +1,10 @@
 import { render, screen } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import { slides } from "./slideData";
+import { getSlides } from "./slideData";
 
 describe("slide deck data", () => {
   it("includes split DSSkills and Sellpath detail slides in order", () => {
-    expect(slides.map((slide) => slide.title)).toEqual([
+    expect(getSlides("en").map((slide) => slide.title)).toEqual([
       "Portfolio",
       "Introduction",
       "01 — Mimesis",
@@ -23,7 +23,7 @@ describe("slide deck data", () => {
   });
 
   it("renders project detail image slides without the old placeholder-sized frame", () => {
-    const slide = slides.find((entry) => entry.id === "slide-9");
+    const slide = getSlides("en").find((entry) => entry.id === "slide-9");
 
     expect(slide).toBeDefined();
 
@@ -37,7 +37,7 @@ describe("slide deck data", () => {
   });
 
   it("renders image detail slides with a lead line and bullet list", () => {
-    const slide = slides.find((entry) => entry.id === "slide-12");
+    const slide = getSlides("en").find((entry) => entry.id === "slide-12");
 
     expect(slide).toBeDefined();
 
@@ -56,7 +56,7 @@ describe("slide deck data", () => {
   });
 
   it("renders the page curl slide with a lead line, bullet list, and linked reference", () => {
-    const slide = slides.find((entry) => entry.id === "slide-4");
+    const slide = getSlides("en").find((entry) => entry.id === "slide-4");
 
     expect(slide).toBeDefined();
 
@@ -89,6 +89,52 @@ describe("slide deck data", () => {
     ).toBeInTheDocument();
     expect(
       screen.getByText(/users can drag any corner to peel the page back/i),
+    ).toBeInTheDocument();
+  });
+
+  it("returns Korean slide titles and translated copy for the Korean locale", () => {
+    const slides = getSlides("ko");
+
+    expect(slides.map((slide) => slide.title)).toEqual([
+      "포트폴리오",
+      "소개",
+      "01 — Mimesis",
+      "01 — Mimesis 상세",
+      "01 — Mimesis 상세 2",
+      "01 — Mimesis 상세 3",
+      "01 — Mimesis 상세 4",
+      "02 — DSSkills",
+      "02 — DSSkills 상세",
+      "02 — DSSkills 상세 2",
+      "03 — Sellpath",
+      "03 — Sellpath 상세",
+      "03 — Sellpath 상세 2",
+      "연락처",
+    ]);
+
+    const introSlide = slides.find((entry) => entry.id === "slide-2");
+
+    expect(introSlide).toBeDefined();
+
+    render(<>{introSlide?.render({ isActive: true })}</>);
+
+    expect(screen.getByText("안녕하세요")).toBeInTheDocument();
+    expect(screen.getByText("경력")).toBeInTheDocument();
+    expect(screen.getByAltText("김용민 프로필 사진")).toBeInTheDocument();
+  });
+
+  it("renders Korean Mimesis detail copy for the Korean locale", () => {
+    const slide = getSlides("ko").find((entry) => entry.id === "slide-4");
+
+    expect(slide).toBeDefined();
+
+    render(<>{slide?.render({ isActive: false })}</>);
+
+    expect(
+      screen.getByText(/iBooks와 Apple Maps에서 사용된 코너 필 효과/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/페이지를 넘기듯 뒤집어 뒷면을 확인할 수 있습니다/i),
     ).toBeInTheDocument();
   });
 });

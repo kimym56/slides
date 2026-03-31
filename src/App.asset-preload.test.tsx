@@ -10,7 +10,7 @@ vi.mock("./mimesis/preloadMimesisAssets", () => ({
 }));
 
 vi.mock("./deck/slideData", () => ({
-  slides: [
+  getSlides: () => [
     {
       id: "slide-1",
       render: () => <div>stub slide</div>,

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { slides } from "./deck/slideData";
+import { getSlides, type Locale } from "./deck/slideData";
 import { preloadMimesisSlideAssets } from "./mimesis/preloadMimesisAssets";
 
 function isDemoInteractionTarget(target: EventTarget | null) {
@@ -18,7 +18,41 @@ function isEditableTarget(target: EventTarget | null) {
   return Boolean(target.closest("input, textarea, select, button, [contenteditable='true']"));
 }
 
+const deckChromeCopy = {
+  en: {
+    keyboardHelpAction: "next",
+    keyboardHelpFullscreen: "full screen",
+    keyboardHelpNavigate: "navigate",
+    navigationLabel: "Slide navigation",
+    nextSlide: "Next slide",
+    previousSlide: "Previous slide",
+  },
+  ko: {
+    keyboardHelpAction: "다음",
+    keyboardHelpFullscreen: "전체 화면",
+    keyboardHelpNavigate: "이동",
+    navigationLabel: "슬라이드 탐색",
+    nextSlide: "다음 슬라이드",
+    previousSlide: "이전 슬라이드",
+  },
+} satisfies Record<Locale, {
+  keyboardHelpAction: string;
+  keyboardHelpFullscreen: string;
+  keyboardHelpNavigate: string;
+  navigationLabel: string;
+  nextSlide: string;
+  previousSlide: string;
+}>;
+
+export function getLocaleFromPathname(pathname: string): Locale {
+  const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
+  return normalizedPath.endsWith("/kr") ? "ko" : "en";
+}
+
 export default function App() {
+  const locale = getLocaleFromPathname(window.location.pathname);
+  const slides = getSlides(locale);
+  const chromeCopy = deckChromeCopy[locale];
   const [currentSlide, setCurrentSlide] = useState(0);
   const totalSlides = slides.length;
   const progress = totalSlides > 1 ? (currentSlide / (totalSlides - 1)) * 100 : 0;
@@ -27,6 +61,10 @@ export default function App() {
   useEffect(() => {
     preloadMimesisSlideAssets();
   }, []);
+
+  useEffect(() => {
+    document.documentElement.lang = locale;
+  }, [locale]);
 
   useEffect(() => {
     const nextSlide = () => {
@@ -134,19 +172,20 @@ export default function App() {
         />
       </div>
 
-      <nav className="slider-nav" aria-label="Slide navigation">
+      <nav className="slider-nav" aria-label={chromeCopy.navigationLabel}>
         <div className="current-section-label" id="current-section">
           {slides[currentSlide]?.title}
         </div>
         <div className={`keyboard-help ${currentSlide >= 2 ? "hidden" : ""}`}>
-          <kbd>Space</kbd> next &middot; <kbd>&larr;</kbd>
-          <kbd>&rarr;</kbd> navigate &middot; <kbd>F</kbd> full screen
+          <kbd>Space</kbd> {chromeCopy.keyboardHelpAction} &middot; <kbd>&larr;</kbd>
+          <kbd>&rarr;</kbd> {chromeCopy.keyboardHelpNavigate} &middot; <kbd>F</kbd>{" "}
+          {chromeCopy.keyboardHelpFullscreen}
         </div>
         <div className="controls">
           <button
             id="btn-prev"
             className="nav-btn"
-            aria-label="Previous slide"
+            aria-label={chromeCopy.previousSlide}
             disabled={currentSlide === 0}
             onClick={() => {
               setCurrentSlide((current) => Math.max(current - 1, 0));
@@ -168,7 +207,7 @@ export default function App() {
           <button
             id="btn-next"
             className="nav-btn"
-            aria-label="Next slide"
+            aria-label={chromeCopy.nextSlide}
             disabled={currentSlide === totalSlides - 1}
             onClick={() => {
               setCurrentSlide((current) => Math.min(current + 1, totalSlides - 1));
