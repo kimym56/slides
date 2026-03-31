@@ -63,9 +63,7 @@ describe("slide deck data", () => {
     render(<>{slide?.render({ isActive: false })}</>);
 
     expect(
-      screen.getByText(
-        /the corner-peel effect used in iBooks and Apple Maps/i,
-      ),
+      screen.getByText(/The corner-peel effect used in iBooks and Apple Maps/i),
     ).toBeInTheDocument();
 
     const referenceLink = screen.getByRole("link", { name: "Minsang Choi" });
@@ -78,7 +76,7 @@ describe("slide deck data", () => {
     expect(referenceLink).toHaveAttribute("rel", "noreferrer");
 
     const lead = screen.getByText(
-      /the corner-peel effect used in iBooks and Apple Maps/i,
+      /The corner-peel effect used in iBooks and Apple Maps/i,
     );
     const bulletList = screen.getByRole("list");
     const bulletItems = screen.getAllByRole("listitem");

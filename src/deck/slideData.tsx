@@ -228,7 +228,7 @@ export const slides: SlideDefinition[] = [
     render: (context) =>
       renderMimesisDetailSlide(context, {
         descriptions: [
-          "the corner-peel effect used in iBooks and Apple Maps.",
+          "The corner-peel effect used in iBooks and Apple Maps.",
           "Users can drag any corner to peel the page back and reveal the reverse side.",
           <>
             Inspired by{" "}
