@@ -81,7 +81,7 @@ function renderMimesisDetailSlide(
   const explanation = renderStructuredDetailsCopy(detailTitle, descriptions);
 
   return (
-    <div className="slide-content project-details-layout project-details-layout--structured">
+    <div className="slide-content project-details-layout project-details-layout--structured project-details-layout--content-centered">
       <div className="details-column stagger-1">
         {demoSide === "left" ? demo : explanation}
       </div>
@@ -120,7 +120,7 @@ function renderProjectImageDetailSlide(
   const explanation = renderStructuredDetailsCopy(detailTitle, descriptions);
 
   return (
-    <div className="slide-content project-details-layout project-details-layout--structured">
+    <div className="slide-content project-details-layout project-details-layout--structured project-details-layout--content-centered">
       <div
         className={`details-column ${imageSide === "left" ? "details-column--image-media" : "details-column--image-copy"} stagger-1`.trim()}
       >
@@ -402,19 +402,26 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       id: "slide-14",
       title: copy.contact.title,
       render: () => (
-        <div className="slide-content">
+        <div className="slide-content outro-layout outro-layout--start-aligned">
           <h2 className="outro-title stagger-1">{copy.contact.outroTitle}</h2>
-          <div className="contact-links stagger-2">
-            <a href={copy.contact.githubHref} className="contact-link">
-              {copy.contact.githubLabel}
-            </a>
-            <a href={copy.contact.linkedinHref} className="contact-link">
-              {copy.contact.linkedinLabel}
-            </a>
-            <a href={copy.contact.emailHref} className="contact-link">
-              {copy.contact.emailLabel}
-            </a>
-          </div>
+          <ul className="contact-links contact-links--stacked contact-links--left-aligned contact-links--bulleted stagger-2">
+            {copy.contact.links.map((link) => {
+              const isExternalLink = !link.href.startsWith("mailto:");
+
+              return (
+                <li key={link.label} className="contact-item contact-item--bulleted">
+                  <a
+                    href={link.href}
+                    className="contact-link contact-link--compact"
+                    target={isExternalLink ? "_blank" : undefined}
+                    rel={isExternalLink ? "noreferrer" : undefined}
+                  >
+                    {`${link.label} : ${link.value}`}
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
         </div>
       ),
     },

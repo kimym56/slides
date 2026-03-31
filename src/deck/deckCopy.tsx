@@ -23,14 +23,15 @@ interface ImageDetailSlideCopy extends DetailSlideCopy {
   imageAlt: string;
 }
 
+interface ContactLinkCopy {
+  href: string;
+  label: string;
+  value: string;
+}
+
 interface DeckCopy {
   contact: {
-    emailHref: string;
-    emailLabel: string;
-    githubHref: string;
-    githubLabel: string;
-    linkedinHref: string;
-    linkedinLabel: string;
+    links: ContactLinkCopy[];
     title: string;
     outroTitle: string;
   };
@@ -74,12 +75,28 @@ interface DeckCopy {
 export const deckCopy: Record<Locale, DeckCopy> = {
   en: {
     contact: {
-      emailHref: "mailto:hello@example.com",
-      emailLabel: "Email",
-      githubHref: "#",
-      githubLabel: "GitHub",
-      linkedinHref: "#",
-      linkedinLabel: "LinkedIn",
+      links: [
+        {
+          href: "mailto:kimym.svb@gmail.com",
+          label: "Email",
+          value: "kimym.svb@gmail.com",
+        },
+        {
+          href: "https://www.linkedin.com/in/kimym56/",
+          label: "LinkedIn",
+          value: "https://www.linkedin.com/in/kimym56/",
+        },
+        {
+          href: "https://github.com/kimym56",
+          label: "GitHub",
+          value: "https://github.com/kimym56",
+        },
+        {
+          href: "https://ymkim-portfolio.vercel.app",
+          label: "Website",
+          value: "ymkim-portfolio.vercel.app",
+        },
+      ],
       outroTitle: "Thank you.",
       title: "Contact",
     },
@@ -153,7 +170,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
           </a>
           .
         </>,
-        "Rebuilt in R3F based on an original implementation created in iOS SwiftUI.",
+        "Rebuilt in R3F(React Three Fiber) based on an original implementation created in iOS SwiftUI.",
       ],
       detailTitle:
         "An interactive recreation of the classic iOS page curl transition",
@@ -164,12 +181,16 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "A typography-based wipe simulation inspired by FFF, where a moving band mechanically reveals and transforms text in real time with cursor control.",
         <>
           Inspired by{" "}
-          <a href="https://blog.cmiscm.com/?page_id=3023" target="_blank" rel="noreferrer">
+          <a
+            href="https://blog.cmiscm.com/?page_id=3023"
+            target="_blank"
+            rel="noreferrer"
+          >
             Jongmin Kim
           </a>
           .
         </>,
-        "Recreated in R3F by combining the original HTML/CSS-based work with a Tesla 3D model.",
+        "Recreated in R3F(React Three Fiber) by combining the original HTML/CSS-based work with a Tesla 3D model.",
       ],
       detailTitle: "Wiper Typography",
       title: "01 — Mimesis Details 2",
@@ -229,7 +250,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "React",
         "TypeScript",
         "Vite",
-        "R3F",
+        "R3F(React Three Fiber)",
         "Three.js",
         "Framer Motion",
         "Realtime-bpm-analyzer",
@@ -266,12 +287,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       title: "03 — Sellpath Details 2",
     },
     sellpathOverview: {
-      description: "Contributed to an AI agent-based CRM and sales platform for the U.S. market.",
-      features: [
-        "Sales dashboard",
-        "Activity Modal",
-        "CRM-integrated tables.",
-      ],
+      description:
+        "Contributed to an AI agent-based CRM and sales platform for the U.S. market.",
+      features: ["Sales dashboard", "Activity Modal", "CRM-integrated tables."],
       featuresLabel: "Key Features",
       mediaAlt: "Sellpath project screenshot",
       projectNumber: "03",
@@ -290,12 +308,28 @@ export const deckCopy: Record<Locale, DeckCopy> = {
   },
   ko: {
     contact: {
-      emailHref: "mailto:hello@example.com",
-      emailLabel: "이메일",
-      githubHref: "#",
-      githubLabel: "GitHub",
-      linkedinHref: "#",
-      linkedinLabel: "LinkedIn",
+      links: [
+        {
+          href: "mailto:kimym.svb@gmail.com",
+          label: "이메일",
+          value: "kimym.svb@gmail.com",
+        },
+        {
+          href: "https://www.linkedin.com/in/kimym56/",
+          label: "링크드인",
+          value: "https://www.linkedin.com/in/kimym56/",
+        },
+        {
+          href: "https://github.com/kimym56",
+          label: "깃허브",
+          value: "https://github.com/kimym56",
+        },
+        {
+          href: "https://ymkim-portfolio.vercel.app",
+          label: "웹사이트",
+          value: "ymkim-portfolio.vercel.app",
+        },
+      ],
       outroTitle: "감사합니다.",
       title: "연락처",
     },
@@ -303,6 +337,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       descriptions: [
         "사용자는 현재 많이 활용되는 UI 관련 에이전트 스킬을 적용해 디자인 시스템 컴포넌트를 생성할 수 있습니다.",
         "대상 컴포넌트와 적용할 스킬을 선택하면 어떤 결과가 나오는지 즉시 확인할 수 있습니다.",
+        "Github의 Star수와 설명을 패치로 가져와 스킬 선택 시 참고할 수 있도록 했습니다.",
       ],
       detailTitle: "에이전트 스킬 선택",
       imageAlt: "DSSkills 프롬프트 엔지니어링 화면",
@@ -312,6 +347,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       descriptions: [
         "생성된 결과는 즉시 미리볼 수 있습니다.",
         "이전 결과물도 히스토리 뷰를 통해 다시 확인할 수 있습니다.",
+        "생성된 결과물은 코드로도 제공되어 사용자가 직접 활용할 수 있도록 했습니다.",
       ],
       detailTitle: "디자인 시스템 컴포넌트 결과물과 코드",
       imageAlt: "DSSkills 검증 샌드박스 화면",
@@ -319,7 +355,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     },
     dsskillsOverview: {
       description:
-        "트렌디한 UI 관련 에이전트 스킬을 디자인 시스템 컴포넌트에 빠르게 적용하고 결과를 즉시 미리볼 수 있는 플레이그라운드입니다.",
+        "UI 관련 에이전트 스킬을 디자인 시스템 컴포넌트에 빠르게 적용하고 결과를 즉시 미리볼 수 있는 플레이그라운드입니다.",
       features: [
         "OpenAI API 기반 생성",
         "즉시 결과 미리보기",
@@ -356,7 +392,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     },
     mimesisDetail1: {
       descriptions: [
-        "iBooks와 Apple Maps에서 사용된 코너 필 효과를 재현했습니다.",
+        "iBooks와 Apple Maps에서 사용된 Page Curl 효과를 재현했습니다.",
         "사용자는 페이지의 어느 모서리든 드래그해 페이지를 넘기듯 뒤집어 뒷면을 확인할 수 있습니다.",
         <>
           <a
@@ -366,30 +402,34 @@ export const deckCopy: Record<Locale, DeckCopy> = {
           >
             Minsang Choi
           </a>
-          의 작업에서 영감을 받았습니다.
+          님의 작업에서 영감을 받았습니다.
         </>,
-        "iOS SwiftUI로 제작된 원본 구현을 바탕으로 R3F에서 다시 구현했습니다.",
+        "iOS SwiftUI로 제작된 원본 구현을 바탕으로 R3F(React Three Fiber)에서 다시 구현했습니다.",
       ],
-      detailTitle: "고전적인 iOS 페이지 컬 전환을 인터랙티브하게 재현했습니다",
+      detailTitle: "iOS Page Curl Effect",
       title: "01 — Mimesis 상세",
     },
     mimesisDetail2: {
       descriptions: [
-        "FFF에서 영감을 받은 타이포그래피 기반 와이프 시뮬레이션으로, 이동하는 밴드가 커서 제어에 따라 텍스트를 실시간으로 드러내고 변형합니다.",
+        "FFF에서 영감을 받은 타이포그래피 기반 와이퍼 시뮬레이션으로, 와이퍼에 따라 텍스트를 실시간으로 드러내고 변형합니다.",
         <>
-          <a href="https://blog.cmiscm.com/?page_id=3023" target="_blank" rel="noreferrer">
+          <a
+            href="https://blog.cmiscm.com/?page_id=3023"
+            target="_blank"
+            rel="noreferrer"
+          >
             Jongmin Kim
           </a>
-          의 작업에서 영감을 받았습니다.
+          님의 작업에서 영감을 받았습니다.
         </>,
-        "기존 HTML/CSS 기반 작업과 Tesla 3D 모델을 결합해 R3F로 재구성했습니다.",
+        "기존 HTML/CSS 기반 작업과 Tesla 3D 모델을 결합해 R3F(React Three Fiber)로 재구성했습니다.",
       ],
       detailTitle: "Wiper Typography",
       title: "01 — Mimesis 상세 2",
     },
     mimesisDetail3: {
       descriptions: [
-        "SABUM의 black and white circle 스터디를 재현한 모노크롬 음양 플레이그라운드로, YouTube 재생 시간을 기반으로 한 보조 pseudo-sync 모드를 포함합니다.",
+        "Yin and Yang Dynamics 프로젝트를 재현하고, YouTube 영상의 소리를 분석해 파티클 움직임을 실시간으로 구동합니다.",
         <>
           <a
             href="https://www.threads.com/@byunsabum/post/DTkg4CWkyVS"
@@ -398,16 +438,16 @@ export const deckCopy: Record<Locale, DeckCopy> = {
           >
             SABUM
           </a>
-          의 작업에서 영감을 받았습니다.
+          님의 작업에서 영감을 받았습니다.
         </>,
-        "브라우저 오디오 출력을 분석해 파티클 움직임을 실시간으로 구동했습니다.",
+        "YouTube 정책 상 음원 추출을 할 수 없는 상황에서 브라우저 오디오 출력을 분석해 파티클 움직임을 실시간으로 구동했습니다.",
       ],
       detailTitle: "Black & White Circle",
       title: "01 — Mimesis 상세 3",
     },
     mimesisDetail4: {
       descriptions: [
-        "Rauno Freiberg의 staggered hover lettering을 CSS 우선 방식으로 재현해, 각 문자가 hover나 press 시 부드러운 3D 캐스케이드를 만듭니다.",
+        "Staggering Motion을 적용한 텍스트로 화면 클릭 시 부드러운 3D 모션을 만듭니다.",
         <>
           <a
             href="https://x.com/raunofreiberg/status/1826969932099104959"
@@ -416,7 +456,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
           >
             Rauno Freiberg
           </a>
-          의 작업에서 영감을 받았습니다.
+          님의 작업에서 영감을 받았습니다.
         </>,
         "사용자 텍스트 입력과 클릭 인터랙션에 따라 동적인 모션 프리뷰를 제공하도록 Framer Motion으로 유사한 인터랙션을 재현했습니다.",
       ],
@@ -425,7 +465,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     },
     mimesisOverview: {
       description:
-        "인터랙티브 UI와 디지털 크리에이티브 작업을 재현하고, 이를 다양한 웹 기술과 재해석으로 확장한 프로젝트입니다.",
+        "인터랙티브 UI와 크리에이티브한 작업들을 재현하고, 이를 다양한 웹 기술과 재해석으로 확장한 프로젝트입니다.",
       features: [
         "웹 기반 3D 렌더링",
         "오디오 캡처 및 분석",
@@ -440,7 +480,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "React",
         "TypeScript",
         "Vite",
-        "R3F",
+        "R3F(React Three Fiber)",
         "Three.js",
         "Framer Motion",
         "Realtime-bpm-analyzer",
@@ -456,8 +496,8 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     sellpathDetail1: {
       descriptions: [
         "Activity Modal의 왼쪽 섹션",
-        "세일즈 워크플로에 필요한 핵심 기능을 한곳에 모은 모달입니다.",
-        "고객 맥락을 한눈에 파악할 수 있도록 구성했습니다.",
+        "세일즈 워크플로우에 필요한 핵심 기능을 한곳에 모은 모달입니다.",
+        "고객 컨텍스트을 한눈에 파악할 수 있도록 구성했습니다.",
         "실시간 데이터와 AI 분석을 기반으로 고객 참여도와 감정 상태를 요약한 데이터 시각화를 제공합니다.",
         "세일즈 팀이 고객 상태를 빠르게 이해하고 더 나은 의사결정을 내릴 수 있도록 설계했습니다.",
       ],
@@ -468,8 +508,8 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     sellpathDetail2: {
       descriptions: [
         "Activity Modal의 오른쪽 섹션",
-        "실시간 통화, 전사, AI 에이전트 기반 답변 제안을 지원합니다.",
-        "원활한 커뮤니케이션과 효율적인 세일즈 워크플로를 돕도록 설계했습니다.",
+        "실시간 통화, 음성-텍스트 변환, AI 에이전트 기반 답변 제안을 지원합니다.",
+        "원활한 커뮤니케이션과 효율적인 세일즈 워크플로우를 돕도록 설계했습니다.",
         "WebSocket과 OpenAI API(STT) 같은 실시간 통신 기능을 통합해 반응성 높은 사용자 경험을 제공합니다.",
       ],
       detailTitle: "Chat UI",
@@ -477,12 +517,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       title: "03 — Sellpath 상세 2",
     },
     sellpathOverview: {
-      description: "미국 시장을 위한 AI 에이전트 기반 CRM 및 세일즈 플랫폼 개발에 기여했습니다.",
-      features: [
-        "세일즈 대시보드",
-        "Activity Modal",
-        "CRM 연동 테이블",
-      ],
+      description:
+        "미국 시장을 위한 AI 에이전트 기반 CRM 및 세일즈 플랫폼 개발에 기여했습니다.",
+      features: ["세일즈 대시보드", "Activity Modal", "CRM 연동 테이블"],
       featuresLabel: "주요 기능",
       mediaAlt: "Sellpath 프로젝트 스크린샷",
       projectNumber: "03",

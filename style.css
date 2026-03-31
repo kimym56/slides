@@ -418,6 +418,15 @@ h1.hero-title {
   max-width: 40ch;
 }
 
+.project-details-layout--content-centered .details-column {
+  align-items: center;
+}
+
+.project-details-layout--content-centered .details-copy--structured {
+  width: min(100%, 40ch);
+  margin-inline: auto;
+}
+
 .details-copy--structured .details-title {
   margin-bottom: 0;
 }
@@ -544,6 +553,10 @@ h1.hero-title {
     height: 60vh;
   }
 
+  .project-details-layout--content-centered .project-detail-image-slot {
+    justify-content: center;
+  }
+
   .project-detail-image-slot {
     justify-content: flex-start;
   }
@@ -554,24 +567,78 @@ h1.hero-title {
 }
 
 /* Outro Slide */
+.outro-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.outro-layout--start-aligned {
+  width: fit-content;
+  max-width: min(100%, 56rem);
+  margin-inline: auto;
+  align-items: flex-start;
+  text-align: left;
+}
+
 .outro-title {
   font-size: clamp(4rem, 8vw, 6rem);
   font-weight: 800;
   letter-spacing: -0.04em;
-  margin-bottom: 2rem;
+  margin-bottom: 0;
 }
 
 .contact-links {
+  list-style: none;
   display: flex;
-  gap: 2rem;
+  padding: 0;
+  margin: 0;
+}
+
+.contact-links--stacked {
+  width: fit-content;
+  max-width: min(100%, 56rem);
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.contact-links--left-aligned {
+  margin-inline: 0;
+}
+
+.contact-links--bulleted {
+  list-style: disc;
+  list-style-position: outside;
+  padding-left: 1.2rem;
+}
+
+.contact-item {
+  width: 100%;
+}
+
+.contact-item--bulleted {
+  display: list-item;
 }
 
 .contact-link {
   color: var(--text-main);
   text-decoration: none;
-  font-size: 1.5rem;
+  display: inline-block;
+  max-width: 100%;
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
   position: relative;
+  text-align: left;
+  overflow-wrap: anywhere;
   transition: color 0.3s ease;
+}
+
+.contact-link--compact {
+  font-size: clamp(0.95rem, 1.6vw, 1.25rem);
+}
+
+.contact-item--bulleted::marker {
+  color: var(--accent);
 }
 
 .contact-link::after {

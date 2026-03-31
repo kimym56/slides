@@ -36,6 +36,35 @@ describe("slide deck data", () => {
     expect(imageSlot).toHaveClass("project-detail-image-slot--intrinsic");
   });
 
+  it("marks the requested detail slides to center their content within the layout", () => {
+    const centeredDetailSlideIds = [
+      "slide-4",
+      "slide-5",
+      "slide-6",
+      "slide-7",
+      "slide-9",
+      "slide-10",
+      "slide-12",
+      "slide-13",
+    ];
+
+    for (const slideId of centeredDetailSlideIds) {
+      const slide = getSlides("en").find((entry) => entry.id === slideId);
+
+      expect(slide).toBeDefined();
+
+      const { container, unmount } = render(
+        <>{slide?.render({ isActive: false })}</>,
+      );
+
+      expect(container.firstElementChild).toHaveClass(
+        "project-details-layout--content-centered",
+      );
+
+      unmount();
+    }
+  });
+
   it("renders image detail slides with a lead line and bullet list", () => {
     const slide = getSlides("en").find((entry) => entry.id === "slide-12");
 
@@ -131,10 +160,65 @@ describe("slide deck data", () => {
     render(<>{slide?.render({ isActive: false })}</>);
 
     expect(
-      screen.getByText(/iBooks와 Apple Maps에서 사용된 코너 필 효과/i),
+      screen.getByText(/iBooks와 Apple Maps에서 사용된 Page Curl 효과/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/페이지를 넘기듯 뒤집어 뒷면을 확인할 수 있습니다/i),
     ).toBeInTheDocument();
+  });
+
+  it("renders the Korean outro slide as a centered vertical contact list", () => {
+    const slide = getSlides("ko").find((entry) => entry.id === "slide-14");
+
+    expect(slide).toBeDefined();
+
+    const { container } = render(<>{slide?.render({ isActive: false })}</>);
+
+    expect(container.firstElementChild).toHaveClass(
+      "outro-layout",
+      "outro-layout--start-aligned",
+    );
+    expect(
+      screen.getByRole("heading", { name: "감사합니다." }),
+    ).toBeInTheDocument();
+
+    const contactList = screen.getByRole("list");
+
+    expect(contactList).toHaveClass(
+      "contact-links",
+      "contact-links--stacked",
+      "contact-links--left-aligned",
+      "contact-links--bulleted",
+    );
+    const contactItems = screen.getAllByRole("listitem");
+
+    expect(contactItems).toHaveLength(4);
+    expect(contactItems[0]).toHaveClass("contact-item", "contact-item--bulleted");
+
+    expect(
+      screen.getByRole("link", {
+        name: "이메일 : kimym.svb@gmail.com",
+      }),
+    ).toHaveClass("contact-link", "contact-link--compact");
+    expect(
+      screen.getByRole("link", {
+        name: "이메일 : kimym.svb@gmail.com",
+      }),
+    ).toHaveAttribute("href", "mailto:kimym.svb@gmail.com");
+    expect(
+      screen.getByRole("link", {
+        name: "링크드인 : https://www.linkedin.com/in/kimym56/",
+      }),
+    ).toHaveAttribute("href", "https://www.linkedin.com/in/kimym56/");
+    expect(
+      screen.getByRole("link", {
+        name: "깃허브 : https://github.com/kimym56",
+      }),
+    ).toHaveAttribute("href", "https://github.com/kimym56");
+    expect(
+      screen.getByRole("link", {
+        name: "웹사이트 : ymkim-portfolio.vercel.app",
+      }),
+    ).toHaveAttribute("href", "https://ymkim-portfolio.vercel.app");
   });
 });
