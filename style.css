@@ -1,8 +1,8 @@
 :root {
   /* 60-30-10 Color Rule */
-  --color-dominant: #FBFBFA; /* 60% Background Base (Premium White) */
+  --color-dominant: #fbfbfa; /* 60% Background Base (Premium White) */
   --color-secondary: #242422; /* 30% Text, Structure, Secondary Backdrops */
-  --color-accent: #FF331F; /* 10% Vibrant Highlights */
+  --color-accent: #ff331f; /* 10% Vibrant Highlights */
 
   /* Semantic Color Mapping */
   --bg-color: var(--color-dominant);
@@ -10,12 +10,16 @@
   --text-muted: color-mix(in srgb, var(--color-secondary) 60%, transparent);
   --accent: var(--color-accent);
   --accent-dot: var(--color-accent);
-  
+
   /* Topography */
-  --font-sans-en: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-  --font-sans-kr: "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", "Noto Sans KR", "Segoe UI", "Malgun Gothic", Helvetica, Arial, sans-serif;
+  --font-sans-en:
+    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica,
+    Arial, sans-serif;
+  --font-sans-kr:
+    "Pretendard", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo",
+    "Noto Sans KR", "Segoe UI", "Malgun Gothic", Helvetica, Arial, sans-serif;
   --font-sans: var(--font-sans-en);
-  
+
   /* Spacing & Layout */
   --slide-padding: clamp(2rem, 5vw, 6rem);
 }
@@ -62,7 +66,9 @@ body {
   padding: var(--slide-padding);
   opacity: 0;
   visibility: hidden;
-  transition: opacity 0.5s ease, visibility 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease;
 }
 
 .slide.active {
@@ -83,12 +89,30 @@ body {
   transition: opacity 0.6s ease;
 }
 
-.slide.active .stagger-1 { transition-delay: 0.1s; opacity: 1; }
-.slide.active .stagger-2 { transition-delay: 0.2s; opacity: 1; }
-.slide.active .stagger-3 { transition-delay: 0.3s; opacity: 1; }
-.slide.active .stagger-4 { transition-delay: 0.4s; opacity: 1; }
-.slide.active .stagger-5 { transition-delay: 0.5s; opacity: 1; }
-.slide.active .stagger-6 { transition-delay: 0.6s; opacity: 1; }
+.slide.active .stagger-1 {
+  transition-delay: 0.1s;
+  opacity: 1;
+}
+.slide.active .stagger-2 {
+  transition-delay: 0.2s;
+  opacity: 1;
+}
+.slide.active .stagger-3 {
+  transition-delay: 0.3s;
+  opacity: 1;
+}
+.slide.active .stagger-4 {
+  transition-delay: 0.4s;
+  opacity: 1;
+}
+.slide.active .stagger-5 {
+  transition-delay: 0.5s;
+  opacity: 1;
+}
+.slide.active .stagger-6 {
+  transition-delay: 0.6s;
+  opacity: 1;
+}
 
 /* Typography styles */
 h1.hero-title {
@@ -145,7 +169,7 @@ h1.hero-title {
 .intro-sentence {
   font-size: clamp(1.2rem, 2vw, 1.5rem);
   font-weight: 300;
-  color: var(--text-muted);
+  color: var(--text-main);
   line-height: 1.5;
 }
 
@@ -157,12 +181,13 @@ h1.hero-title {
 }
 
 .resume-section h3 {
-  font-size: 1rem;
+  font-size: 1.25rem;
   text-transform: uppercase;
   letter-spacing: 0.1em;
   color: var(--text-main);
   margin-bottom: 0.5rem;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-secondary) 10%, transparent);
   padding-bottom: 0.5rem;
 }
 
@@ -174,8 +199,8 @@ h1.hero-title {
 }
 
 .resume-section li {
-  font-size: 1.1rem;
-  color: var(--text-muted);
+  font-size: 1.25rem;
+  color: var(--text-main);
   font-weight: 400;
   display: flex;
   justify-content: space-between;
@@ -184,7 +209,7 @@ h1.hero-title {
 }
 
 .resume-section li .date {
-  font-size: 0.95rem;
+  font-size: 1.25rem;
   color: color-mix(in srgb, var(--text-main) 40%, transparent);
   white-space: nowrap;
 }
@@ -219,7 +244,9 @@ h1.hero-title {
 }
 
 .project-number {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: clamp(1rem, 2vw, 1.5rem);
   font-weight: 500;
   color: var(--text-muted);
@@ -240,7 +267,8 @@ h1.hero-title {
   font-weight: 500;
   color: var(--text-main);
   letter-spacing: 0.05em;
-  border-bottom: 1px solid color-mix(in srgb, var(--color-secondary) 10%, transparent);
+  border-bottom: 1px solid
+    color-mix(in srgb, var(--color-secondary) 10%, transparent);
   padding-bottom: 0.5rem;
   margin-top: -0.5rem;
 }
@@ -281,7 +309,7 @@ h1.hero-title {
 }
 
 .project-features li::before {
-  content: '\2192'; /* Right arrow -> */
+  content: "\2192"; /* Right arrow -> */
   position: absolute;
   left: 0;
   color: var(--accent);
@@ -304,7 +332,7 @@ h1.hero-title {
   max-height: 60vh;
   border-radius: 12px;
   display: block;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
 }
 
 .sellpath-main-media {
@@ -322,7 +350,7 @@ h1.hero-title {
   justify-content: center;
   font-size: 1.5rem;
   color: color-mix(in srgb, var(--color-secondary) 30%, transparent);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   position: relative;
 }
@@ -335,9 +363,30 @@ h1.hero-title {
 }
 
 /* Solid backgrounds for different projects */
-.mimesis-bg { background: color-mix(in srgb, var(--color-secondary) 4%, var(--color-dominant)); border: 1px solid color-mix(in srgb, var(--color-secondary) 8%, transparent); }
-.ymkim-bg { background: color-mix(in srgb, var(--color-secondary) 8%, var(--color-dominant)); border: 1px solid color-mix(in srgb, var(--color-secondary) 8%, transparent); }
-.sellpath-bg { background: color-mix(in srgb, var(--color-secondary) 12%, var(--color-dominant)); border: 1px solid color-mix(in srgb, var(--color-secondary) 8%, transparent); }
+.mimesis-bg {
+  background: color-mix(
+    in srgb,
+    var(--color-secondary) 4%,
+    var(--color-dominant)
+  );
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 8%, transparent);
+}
+.ymkim-bg {
+  background: color-mix(
+    in srgb,
+    var(--color-secondary) 8%,
+    var(--color-dominant)
+  );
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 8%, transparent);
+}
+.sellpath-bg {
+  background: color-mix(
+    in srgb,
+    var(--color-secondary) 12%,
+    var(--color-dominant)
+  );
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 8%, transparent);
+}
 
 .empty-box {
   background: transparent;
@@ -431,11 +480,19 @@ h1.hero-title {
   margin-bottom: 0;
 }
 
+.details-copy--large-text .details-title {
+  font-size: 2rem;
+}
+
 .details-lead {
   font-size: 1.02rem;
   color: var(--text-main);
   line-height: 1.65;
   text-wrap: pretty;
+}
+
+.details-copy--large-text .details-lead {
+  font-size: 1.25rem;
 }
 
 .details-list {
@@ -454,6 +511,10 @@ h1.hero-title {
   text-wrap: pretty;
 }
 
+.details-copy--large-text .details-list-item {
+  font-size: 1.25rem;
+}
+
 .details-list-item::before {
   content: "";
   position: absolute;
@@ -465,8 +526,12 @@ h1.hero-title {
   background: color-mix(in srgb, var(--accent) 72%, var(--text-main));
 }
 
-.mt-2 { margin-top: 2rem; }
-.mb-2 { margin-bottom: 2rem; }
+.mt-2 {
+  margin-top: 2rem;
+}
+.mb-2 {
+  margin-bottom: 2rem;
+}
 
 .project-demo-slot {
   width: 100%;
@@ -474,7 +539,7 @@ h1.hero-title {
   border-radius: 12px;
   background: color-mix(in srgb, var(--color-secondary) 3%, transparent);
   border: 1px solid color-mix(in srgb, var(--color-secondary) 8%, transparent);
-  box-shadow: 0 20px 50px rgba(0,0,0,0.06);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.06);
   overflow: hidden;
   position: relative;
   display: flex;
@@ -505,7 +570,7 @@ h1.hero-title {
   max-height: 54vh;
   display: block;
   border-radius: 12px;
-  box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.08);
 }
 
 .dsskills-detail1-image {
@@ -642,7 +707,7 @@ h1.hero-title {
 }
 
 .contact-link::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 0%;
   height: 2px;
@@ -698,15 +763,19 @@ h1.hero-title {
   border: 1px solid color-mix(in srgb, var(--color-secondary) 15%, transparent);
   border-radius: 4px;
   padding: 0.1rem 0.4rem;
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 0.75rem;
   color: var(--text-main);
-  box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
   font-weight: 500;
 }
 
 .current-section-label {
-  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
   font-size: 0.9rem;
   font-weight: 500;
   color: var(--text-muted);
@@ -748,7 +817,9 @@ h1.hero-title {
   color: var(--text-main);
   cursor: pointer;
   opacity: 0.5;
-  transition: opacity 0.3s, transform 0.3s;
+  transition:
+    opacity 0.3s,
+    transform 0.3s;
   display: flex;
 }
 

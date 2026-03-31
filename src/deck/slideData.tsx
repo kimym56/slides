@@ -14,6 +14,7 @@ interface SlideDefinition {
 }
 
 interface MimesisDetailSlideOptions {
+  copyClassName?: string;
   descriptions: ReactNode[];
   demoSide?: "left" | "right";
   detailTitle: string;
@@ -21,6 +22,7 @@ interface MimesisDetailSlideOptions {
 }
 
 interface ProjectImageDetailSlideOptions {
+  copyClassName?: string;
   descriptions: ReactNode[];
   detailTitle: string;
   imageAlt: string;
@@ -44,11 +46,14 @@ interface ProjectOverviewSlideOptions {
 function renderStructuredDetailsCopy(
   detailTitle: string,
   descriptions: ReactNode[],
+  copyClassName?: string,
 ) {
   const [leadDescription, ...bulletDescriptions] = descriptions;
 
   return (
-    <div className="details-copy details-copy--structured">
+    <div
+      className={`details-copy details-copy--structured ${copyClassName ?? ""}`.trim()}
+    >
       <h3 className="details-title">{detailTitle}</h3>
       {leadDescription ? (
         <p className="details-lead">{leadDescription}</p>
@@ -69,6 +74,7 @@ function renderStructuredDetailsCopy(
 function renderMimesisDetailSlide(
   { isActive }: { isActive: boolean },
   {
+    copyClassName,
     descriptions,
     demoSide = "left",
     detailTitle,
@@ -78,7 +84,11 @@ function renderMimesisDetailSlide(
   const demo = (
     <div className="project-demo-slot">{isActive ? renderDemo() : null}</div>
   );
-  const explanation = renderStructuredDetailsCopy(detailTitle, descriptions);
+  const explanation = renderStructuredDetailsCopy(
+    detailTitle,
+    descriptions,
+    copyClassName,
+  );
 
   return (
     <div className="slide-content project-details-layout project-details-layout--structured project-details-layout--content-centered">
@@ -95,6 +105,7 @@ function renderMimesisDetailSlide(
 function renderProjectImageDetailSlide(
   { isActive }: { isActive: boolean },
   {
+    copyClassName,
     descriptions,
     detailTitle,
     imageAlt,
@@ -117,7 +128,11 @@ function renderProjectImageDetailSlide(
       ) : null}
     </div>
   );
-  const explanation = renderStructuredDetailsCopy(detailTitle, descriptions);
+  const explanation = renderStructuredDetailsCopy(
+    detailTitle,
+    descriptions,
+    copyClassName,
+  );
 
   return (
     <div className="slide-content project-details-layout project-details-layout--structured project-details-layout--content-centered">
@@ -257,6 +272,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.mimesisDetail1.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.mimesisDetail1.descriptions,
           detailTitle: copy.mimesisDetail1.detailTitle,
           demoSide: "left",
@@ -268,6 +284,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.mimesisDetail2.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.mimesisDetail2.descriptions,
           detailTitle: copy.mimesisDetail2.detailTitle,
           demoSide: "right",
@@ -279,6 +296,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.mimesisDetail3.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.mimesisDetail3.descriptions,
           detailTitle: copy.mimesisDetail3.detailTitle,
           demoSide: "left",
@@ -290,6 +308,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.mimesisDetail4.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.mimesisDetail4.descriptions,
           detailTitle: copy.mimesisDetail4.detailTitle,
           demoSide: "right",
@@ -324,6 +343,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.dsskillsDetail1.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.dsskillsDetail1.descriptions,
           detailTitle: copy.dsskillsDetail1.detailTitle,
           imageAlt: copy.dsskillsDetail1.imageAlt,
@@ -338,6 +358,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.dsskillsDetail2.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.dsskillsDetail2.descriptions,
           detailTitle: copy.dsskillsDetail2.detailTitle,
           imageAlt: copy.dsskillsDetail2.imageAlt,
@@ -375,6 +396,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.sellpathDetail1.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.sellpathDetail1.descriptions,
           detailTitle: copy.sellpathDetail1.detailTitle,
           imageAlt: copy.sellpathDetail1.imageAlt,
@@ -389,6 +411,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.sellpathDetail2.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
+          copyClassName: "details-copy--large-text",
           descriptions: copy.sellpathDetail2.descriptions,
           detailTitle: copy.sellpathDetail2.detailTitle,
           imageAlt: copy.sellpathDetail2.imageAlt,

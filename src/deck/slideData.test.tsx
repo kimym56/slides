@@ -65,6 +65,33 @@ describe("slide deck data", () => {
     }
   });
 
+  it("applies the larger text treatment to the requested detail slides", () => {
+    const largerTextSlideIds = [
+      "slide-4",
+      "slide-5",
+      "slide-6",
+      "slide-7",
+      "slide-9",
+      "slide-10",
+      "slide-12",
+      "slide-13",
+    ];
+
+    for (const slideId of largerTextSlideIds) {
+      const slide = getSlides("en").find((entry) => entry.id === slideId);
+
+      expect(slide).toBeDefined();
+
+      const { container, unmount } = render(<>{slide?.render({ isActive: false })}</>);
+
+      expect(container.querySelector(".details-copy")).toHaveClass(
+        "details-copy--large-text",
+      );
+
+      unmount();
+    }
+  });
+
   it("renders image detail slides with a lead line and bullet list", () => {
     const slide = getSlides("en").find((entry) => entry.id === "slide-12");
 
