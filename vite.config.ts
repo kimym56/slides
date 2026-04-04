@@ -16,7 +16,7 @@ export function resolveMimesisSourceRoot(
     : vendoredMimesisSourceRoot;
 }
 
-function emitStaticLocaleEntryHtml(localeEntries = ["kr"]) {
+function emitStaticLocaleEntryHtml(localeEntries = ["en", "kr"]) {
   let rootDir = __dirname;
   let buildOutDir = "dist";
 

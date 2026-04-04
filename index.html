@@ -5,9 +5,32 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script>
+      const localePaths = { en: "/en", ko: "/kr" };
       const pathname = window.location.pathname;
       const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
-      document.documentElement.lang = normalizedPath.endsWith("/kr") ? "ko" : "en";
+      const isEnglishPath =
+        normalizedPath === localePaths.en || normalizedPath.startsWith(`${localePaths.en}/`);
+      const isKoreanPath =
+        normalizedPath === localePaths.ko || normalizedPath.startsWith(`${localePaths.ko}/`);
+      const preferredLanguages = navigator.languages?.length
+        ? navigator.languages
+        : [navigator.language];
+      const detectedLocale = preferredLanguages.some((language) =>
+        language.toLowerCase().startsWith("ko"),
+      )
+        ? "ko"
+        : "en";
+
+      if (!isEnglishPath && !isKoreanPath) {
+        window.history.replaceState(
+          {},
+          "",
+          `${localePaths[detectedLocale]}${window.location.search}${window.location.hash}`,
+        );
+      }
+
+      const initialLocale = isEnglishPath ? "en" : isKoreanPath ? "ko" : detectedLocale;
+      document.documentElement.lang = initialLocale;
     </script>
     <title>YongMin Kim - Design Engineer Portfolio</title>
     <!-- English uses Inter; the Korean locale switches to Pretendard. -->

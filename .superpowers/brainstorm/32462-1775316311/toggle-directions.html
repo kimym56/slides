@@ -1,0 +1,255 @@
+<style>
+  .toggle-cards {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 28px;
+  }
+
+  .toggle-card {
+    border: 1px solid rgba(36, 36, 34, 0.12);
+    border-radius: 22px;
+    background: rgba(255, 255, 255, 0.9);
+    overflow: hidden;
+    cursor: pointer;
+  }
+
+  .toggle-card.selected {
+    border-color: rgba(255, 51, 31, 0.4);
+    box-shadow: 0 0 0 1px rgba(255, 51, 31, 0.15);
+  }
+
+  .toggle-preview {
+    position: relative;
+    min-height: 260px;
+    padding: 28px;
+    background:
+      linear-gradient(180deg, rgba(251, 251, 250, 0.98), rgba(247, 247, 245, 0.98));
+  }
+
+  .toggle-preview::before {
+    content: "";
+    position: absolute;
+    inset: 18px;
+    border: 1px solid rgba(36, 36, 34, 0.08);
+    border-radius: 18px;
+  }
+
+  .toggle-position {
+    position: absolute;
+    top: 38px;
+    right: 38px;
+    z-index: 1;
+  }
+
+  .hero-hint {
+    position: absolute;
+    left: 38px;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 1;
+    color: #242422;
+  }
+
+  .hero-hint .kicker {
+    margin-bottom: 10px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    opacity: 0.46;
+  }
+
+  .hero-hint .title {
+    font-size: 46px;
+    font-weight: 800;
+    letter-spacing: -0.05em;
+    line-height: 0.95;
+  }
+
+  .hero-hint .meta {
+    margin-top: 12px;
+    display: flex;
+    gap: 14px;
+    font-size: 12px;
+    color: rgba(36, 36, 34, 0.56);
+    letter-spacing: 0.04em;
+  }
+
+  .toggle-a {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: rgba(36, 36, 34, 0.48);
+  }
+
+  .toggle-a .active {
+    color: #242422;
+    position: relative;
+  }
+
+  .toggle-a .active::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 2px;
+    background: #ff331f;
+  }
+
+  .toggle-a .divider {
+    color: rgba(36, 36, 34, 0.22);
+  }
+
+  .toggle-b {
+    display: inline-flex;
+    padding: 4px;
+    border: 1px solid rgba(36, 36, 34, 0.12);
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.82);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.05);
+  }
+
+  .toggle-b span {
+    min-width: 46px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    text-align: center;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    color: rgba(36, 36, 34, 0.44);
+  }
+
+  .toggle-b .active {
+    background: #242422;
+    color: #fbfbfa;
+  }
+
+  .toggle-c {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: stretch;
+    min-width: 64px;
+    border-left: 1px solid rgba(36, 36, 34, 0.16);
+  }
+
+  .toggle-c span {
+    padding: 7px 0 7px 14px;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    color: rgba(36, 36, 34, 0.42);
+    text-align: left;
+  }
+
+  .toggle-c .active {
+    color: #242422;
+    position: relative;
+  }
+
+  .toggle-c .active::before {
+    content: "";
+    position: absolute;
+    left: -1px;
+    top: 50%;
+    width: 16px;
+    height: 2px;
+    background: #ff331f;
+    transform: translateY(-50%);
+  }
+
+  .toggle-body {
+    padding: 18px 20px 22px;
+    background: #fff;
+  }
+
+  .toggle-body h3 {
+    margin: 0 0 8px;
+    font-size: 17px;
+    letter-spacing: -0.02em;
+  }
+
+  .toggle-body p {
+    margin: 0;
+    color: rgba(36, 36, 34, 0.66);
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 1080px) {
+    .toggle-cards {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<h2>Which toggle direction fits this deck better?</h2>
+<p class="subtitle">I kept all three in the top-right corner of slide 1. Focus on whether it feels premium, restrained, and consistent with the portfolio rather than “button-like.”</p>
+
+<div class="toggle-cards">
+  <div class="toggle-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="toggle-preview">
+      <div class="hero-hint">
+        <div class="kicker">PORTFOLIO</div>
+        <div class="title">Portfolio</div>
+        <div class="meta"><span>YongMin Kim</span><span>2026</span></div>
+      </div>
+      <div class="toggle-position">
+        <div class="toggle-a">
+          <span class="active">EN</span>
+          <span class="divider">/</span>
+          <span>KR</span>
+        </div>
+      </div>
+    </div>
+    <div class="toggle-body">
+      <h3>A. Editorial</h3>
+      <p>Minimal text toggle with a small accent underline. Feels the least like a UI control and the most like part of the typography system.</p>
+    </div>
+  </div>
+
+  <div class="toggle-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="toggle-preview">
+      <div class="hero-hint">
+        <div class="kicker">PORTFOLIO</div>
+        <div class="title">Portfolio</div>
+        <div class="meta"><span>YongMin Kim</span><span>2026</span></div>
+      </div>
+      <div class="toggle-position">
+        <div class="toggle-b">
+          <span class="active">EN</span>
+          <span>KR</span>
+        </div>
+      </div>
+    </div>
+    <div class="toggle-body">
+      <h3>B. Capsule</h3>
+      <p>More obviously interactive and easier to scan, but it reads more like an app control than deck chrome.</p>
+    </div>
+  </div>
+
+  <div class="toggle-card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="toggle-preview">
+      <div class="hero-hint">
+        <div class="kicker">PORTFOLIO</div>
+        <div class="title">Portfolio</div>
+        <div class="meta"><span>YongMin Kim</span><span>2026</span></div>
+      </div>
+      <div class="toggle-position">
+        <div class="toggle-c">
+          <span class="active">EN</span>
+          <span>KR</span>
+        </div>
+      </div>
+    </div>
+    <div class="toggle-body">
+      <h3>C. Index Mark</h3>
+      <p>Most architectural and quiet. Stronger hierarchy, but slightly more severe than the rest of the current deck.</p>
+    </div>
+  </div>
+</div>

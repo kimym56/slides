@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import { vi } from "vitest";
 
 vi.mock("./deck/slideData", () => ({
@@ -18,8 +18,15 @@ vi.mock("./deck/slideData", () => ({
 
 import App from "./App";
 
-it("renders the first slide and deck chrome from the React shell", () => {
-  window.history.replaceState({}, "", "/");
+function mockNavigatorLanguages(languages: string[]) {
+  Object.defineProperty(window.navigator, "languages", {
+    configurable: true,
+    value: languages,
+  });
+}
+
+it("renders the first slide and deck chrome from the React shell on /en", () => {
+  window.history.replaceState({}, "", "/en");
 
   render(<App />);
 
@@ -38,4 +45,40 @@ it("renders Korean deck chrome when pathname ends with /kr", () => {
   expect(screen.getByLabelText("이전 슬라이드")).toBeInTheDocument();
   expect(screen.getByLabelText("다음 슬라이드")).toBeInTheDocument();
   expect(screen.getByText(/다음/)).toBeInTheDocument();
+});
+
+it("redirects / to /kr when the browser prefers Korean", async () => {
+  mockNavigatorLanguages(["ko-KR", "en-US"]);
+  window.history.replaceState({}, "", "/");
+
+  render(<App />);
+
+  await waitFor(() => {
+    expect(window.location.pathname).toBe("/kr");
+  });
+  expect(screen.getByText("테스트 슬라이드")).toBeInTheDocument();
+});
+
+it("redirects / to /en when the browser does not prefer Korean", async () => {
+  mockNavigatorLanguages(["en-US"]);
+  window.history.replaceState({}, "", "/");
+
+  render(<App />);
+
+  await waitFor(() => {
+    expect(window.location.pathname).toBe("/en");
+  });
+  expect(screen.getByText("stub slide")).toBeInTheDocument();
+});
+
+it("renders all Korean slides and hides deck chrome in pdf export mode", () => {
+  window.history.replaceState({}, "", "/kr?export=pdf");
+
+  render(<App />);
+
+  expect(screen.getByText("테스트 슬라이드")).toBeInTheDocument();
+  expect(screen.getByText("두 번째 슬라이드")).toBeInTheDocument();
+  expect(screen.queryByLabelText("이전 슬라이드")).not.toBeInTheDocument();
+  expect(screen.queryByLabelText("다음 슬라이드")).not.toBeInTheDocument();
+  expect(screen.queryByText("1 / 2")).not.toBeInTheDocument();
 });

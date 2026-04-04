@@ -93,7 +93,7 @@ it("pins the shared runtime entrypoints to slides' node_modules", () => {
   );
 });
 
-it("emits a static /kr html entry for hosts without SPA rewrites", async () => {
+it("emits static /en and /kr html entries for hosts without SPA rewrites", async () => {
   const config = getBuildConfig();
   const plugin = config.plugins?.find(
     (candidate) => candidate && "name" in candidate && candidate.name === "emit-static-locale-entry-html",
@@ -122,6 +122,9 @@ it("emits a static /kr html entry for hosts without SPA rewrites", async () => {
 
     await plugin.closeBundle.call({} as never);
 
+    expect(
+      readFileSync(path.join(distDir, "en", "index.html"), "utf8"),
+    ).toBe(sourceHtml);
     expect(
       readFileSync(path.join(distDir, "kr", "index.html"), "utf8"),
     ).toBe(sourceHtml);

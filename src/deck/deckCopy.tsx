@@ -7,9 +7,9 @@ interface OverviewSlideCopy {
   features: string[];
   featuresLabel: string;
   mediaAlt?: string;
+  projectUrl: string;
   projectNumber: string;
   projectTitle: string;
-  subtitle: string;
   techStack: string[];
 }
 
@@ -72,6 +72,19 @@ interface DeckCopy {
   };
 }
 
+function createReferenceLink(label: string, href: string) {
+  return (
+    <a
+      className="reference-link"
+      href={href}
+      target="_blank"
+      rel="noreferrer"
+    >
+      {label}
+    </a>
+  );
+}
+
 export const deckCopy: Record<Locale, DeckCopy> = {
   en: {
     contact: {
@@ -94,7 +107,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         {
           href: "https://ymkim-portfolio.vercel.app",
           label: "Website",
-          value: "ymkim-portfolio.vercel.app",
+          value: "https://ymkim-portfolio.vercel.app",
         },
       ],
       outroTitle: "Thank you.",
@@ -128,9 +141,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       ],
       featuresLabel: "Key Features",
       mediaAlt: "DSSkills project screenshot",
+      projectUrl: "https://ymkim-dsskills.vercel.app",
       projectNumber: "02",
       projectTitle: "DSSkills",
-      subtitle: "Design System with Agent Skills",
       techStack: [
         "Next.js",
         "React",
@@ -161,13 +174,10 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "Users can drag any corner to peel the page back and reveal the reverse side.",
         <>
           Inspired by{" "}
-          <a
-            href="https://www.linkedin.com/posts/minsangchoi_metalshader-activity-7431057118914490368-L5TN/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Minsang Choi
-          </a>
+          {createReferenceLink(
+            "Minsang Choi",
+            "https://www.linkedin.com/posts/minsangchoi_metalshader-activity-7431057118914490368-L5TN/",
+          )}
           .
         </>,
         "Rebuilt in R3F(React Three Fiber) based on an original implementation created in iOS SwiftUI.",
@@ -181,13 +191,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "A typography-based wipe simulation inspired by FFF, where a moving band mechanically reveals and transforms text in real time with cursor control.",
         <>
           Inspired by{" "}
-          <a
-            href="https://blog.cmiscm.com/?page_id=3023"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Jongmin Kim
-          </a>
+          {createReferenceLink("Jongmin Kim", "https://blog.cmiscm.com/?page_id=3023")}
           .
         </>,
         "Recreated in R3F(React Three Fiber) by combining the original HTML/CSS-based work with a Tesla 3D model.",
@@ -200,13 +204,10 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "A monochrome yin-yang playground recreating SABUM’s black and white circle study, featuring a secondary pseudo-sync mode driven by YouTube playback time.",
         <>
           Inspired by{" "}
-          <a
-            href="https://www.threads.com/@byunsabum/post/DTkg4CWkyVS"
-            target="_blank"
-            rel="noreferrer"
-          >
-            SABUM
-          </a>
+          {createReferenceLink(
+            "SABUM",
+            "https://www.threads.com/@byunsabum/post/DTkg4CWkyVS",
+          )}
           .
         </>,
         "Embedded YouTube and analyzed browser audio output to drive particle motion in real time.",
@@ -219,13 +220,10 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "A CSS-first recreation of Rauno Freiberg’s staggered hover lettering, where each character flips through a soft 3D cascade on hover or press.",
         <>
           Inspired by{" "}
-          <a
-            href="https://x.com/raunofreiberg/status/1826969932099104959"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Rauno Freiberg
-          </a>
+          {createReferenceLink(
+            "Rauno Freiberg",
+            "https://x.com/raunofreiberg/status/1826969932099104959",
+          )}
           .
         </>,
         "Recreated a similar interaction using Framer Motion, with dynamic motion previews based on user text input and click interactions.",
@@ -242,9 +240,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "Framer Motion-based interactions",
       ],
       featuresLabel: "Key Features",
+      projectUrl: "https://ymkim-mimesis.vercel.app",
       projectNumber: "01",
       projectTitle: "Mimesis",
-      subtitle: "Interactive UI Recreation",
       techStack: [
         "Next.js",
         "React",
@@ -292,9 +290,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       features: ["Sales dashboard", "Activity Modal", "CRM-integrated tables."],
       featuresLabel: "Key Features",
       mediaAlt: "Sellpath project screenshot",
+      projectUrl: "https://www.sellpath.ai",
       projectNumber: "03",
       projectTitle: "Sellpath",
-      subtitle: "Worked for 2 years as a Frontend Engineer.",
       techStack: [
         "Next.js",
         "React",
@@ -327,7 +325,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         {
           href: "https://ymkim-portfolio.vercel.app",
           label: "웹사이트",
-          value: "ymkim-portfolio.vercel.app",
+          value: "https://ymkim-portfolio.vercel.app",
         },
       ],
       outroTitle: "감사합니다.",
@@ -337,7 +335,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       descriptions: [
         "사용자는 현재 많이 활용되는 UI 관련 에이전트 스킬을 적용해 디자인 시스템 컴포넌트를 생성할 수 있습니다.",
         "대상 컴포넌트와 적용할 스킬을 선택하면 어떤 결과가 나오는지 즉시 확인할 수 있습니다.",
-        "Github의 Star수와 설명을 패치로 가져와 스킬 선택 시 참고할 수 있도록 했습니다.",
+        "GitHub의 스타 수와 설명을 패치해 스킬 선택 전에 참고할 수 있도록 구성했습니다.",
       ],
       detailTitle: "에이전트 스킬 선택",
       imageAlt: "DSSkills 프롬프트 엔지니어링 화면",
@@ -345,11 +343,11 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     },
     dsskillsDetail2: {
       descriptions: [
-        "생성된 결과는 즉시 미리볼 수 있습니다.",
+        "생성된 결과는 즉시 미리 볼 수 있습니다.",
         "이전 결과물도 히스토리 뷰를 통해 다시 확인할 수 있습니다.",
         "생성된 결과물은 코드로도 제공되어 사용자가 직접 활용할 수 있도록 했습니다.",
       ],
-      detailTitle: "디자인 시스템 컴포넌트 결과물과 코드",
+      detailTitle: "디자인 시스템 컴포넌트",
       imageAlt: "DSSkills 검증 샌드박스 화면",
       title: "02 — DSSkills 상세 2",
     },
@@ -363,9 +361,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       ],
       featuresLabel: "주요 기능",
       mediaAlt: "DSSkills 프로젝트 스크린샷",
+      projectUrl: "https://ymkim-dsskills.vercel.app",
       projectNumber: "02",
       projectTitle: "DSSkills",
-      subtitle: "에이전트 스킬을 활용한 디자인 시스템",
       techStack: [
         "Next.js",
         "React",
@@ -393,15 +391,12 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     mimesisDetail1: {
       descriptions: [
         "iBooks와 Apple Maps에서 사용된 Page Curl 효과를 재현했습니다.",
-        "사용자는 페이지의 어느 모서리든 드래그해 페이지를 넘기듯 뒤집어 뒷면을 확인할 수 있습니다.",
+        "사용자는 페이지의 어느 모서리든 드래그해 페이지를 넘기듯 뒤집으며 뒷면을 확인할 수 있습니다.",
         <>
-          <a
-            href="https://www.linkedin.com/posts/minsangchoi_metalshader-activity-7431057118914490368-L5TN/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Minsang Choi
-          </a>
+          {createReferenceLink(
+            "Minsang Choi",
+            "https://www.linkedin.com/posts/minsangchoi_metalshader-activity-7431057118914490368-L5TN/",
+          )}
           님의 작업에서 영감을 받았습니다.
         </>,
         "iOS SwiftUI로 제작된 원본 구현을 바탕으로 R3F(React Three Fiber)에서 다시 구현했습니다.",
@@ -413,13 +408,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       descriptions: [
         "FFF에서 영감을 받은 타이포그래피 기반 와이퍼 시뮬레이션으로, 와이퍼에 따라 텍스트를 실시간으로 드러내고 변형합니다.",
         <>
-          <a
-            href="https://blog.cmiscm.com/?page_id=3023"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Jongmin Kim
-          </a>
+          {createReferenceLink("Jongmin Kim", "https://blog.cmiscm.com/?page_id=3023")}
           님의 작업에서 영감을 받았습니다.
         </>,
         "기존 HTML/CSS 기반 작업과 Tesla 3D 모델을 결합해 R3F(React Three Fiber)로 재구성했습니다.",
@@ -431,31 +420,25 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       descriptions: [
         "Yin and Yang Dynamics 프로젝트를 재현하고, YouTube 영상의 소리를 분석해 파티클 움직임을 실시간으로 구동합니다.",
         <>
-          <a
-            href="https://www.threads.com/@byunsabum/post/DTkg4CWkyVS"
-            target="_blank"
-            rel="noreferrer"
-          >
-            SABUM
-          </a>
+          {createReferenceLink(
+            "SABUM",
+            "https://www.threads.com/@byunsabum/post/DTkg4CWkyVS",
+          )}
           님의 작업에서 영감을 받았습니다.
         </>,
-        "YouTube 정책 상 음원 추출을 할 수 없는 상황에서 브라우저 오디오 출력을 분석해 파티클 움직임을 실시간으로 구동했습니다.",
+        "YouTube 정책상 음원을 추출할 수 없어 브라우저 오디오 출력을 분석해 파티클 움직임을 실시간으로 구동했습니다.",
       ],
       detailTitle: "Black & White Circle",
       title: "01 — Mimesis 상세 3",
     },
     mimesisDetail4: {
       descriptions: [
-        "Staggering Motion을 적용한 텍스트로 화면 클릭 시 부드러운 3D 모션을 만듭니다.",
+        "Staggering Motion을 적용한 텍스트 인터랙션으로 화면 클릭 시 부드러운 3D 모션을 만듭니다.",
         <>
-          <a
-            href="https://x.com/raunofreiberg/status/1826969932099104959"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Rauno Freiberg
-          </a>
+          {createReferenceLink(
+            "Rauno Freiberg",
+            "https://x.com/raunofreiberg/status/1826969932099104959",
+          )}
           님의 작업에서 영감을 받았습니다.
         </>,
         "사용자 텍스트 입력과 클릭 인터랙션에 따라 동적인 모션 프리뷰를 제공하도록 Framer Motion으로 유사한 인터랙션을 재현했습니다.",
@@ -472,9 +455,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         "Framer Motion 기반 인터랙션",
       ],
       featuresLabel: "주요 기능",
+      projectUrl: "https://ymkim-mimesis.vercel.app",
       projectNumber: "01",
       projectTitle: "Mimesis",
-      subtitle: "인터랙티브 UI 재현",
       techStack: [
         "Next.js",
         "React",
@@ -496,7 +479,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     sellpathDetail1: {
       descriptions: [
         "Activity Modal의 왼쪽 섹션",
-        "세일즈 워크플로우에 필요한 핵심 기능을 한곳에 모은 모달입니다.",
+        "세일즈 워크플로우에 필요한 핵심 기능을 한 곳에 모은 모달입니다.",
         "고객 컨텍스트을 한눈에 파악할 수 있도록 구성했습니다.",
         "실시간 데이터와 AI 분석을 기반으로 고객 참여도와 감정 상태를 요약한 데이터 시각화를 제공합니다.",
         "세일즈 팀이 고객 상태를 빠르게 이해하고 더 나은 의사결정을 내릴 수 있도록 설계했습니다.",
@@ -522,9 +505,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       features: ["세일즈 대시보드", "Activity Modal", "CRM 연동 테이블"],
       featuresLabel: "주요 기능",
       mediaAlt: "Sellpath 프로젝트 스크린샷",
+      projectUrl: "https://www.sellpath.ai",
       projectNumber: "03",
       projectTitle: "Sellpath",
-      subtitle: "프론트엔드 엔지니어로 2년간 근무했습니다.",
       techStack: [
         "Next.js",
         "React",

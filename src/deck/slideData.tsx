@@ -39,7 +39,7 @@ interface ProjectOverviewSlideOptions {
   media: ReactNode;
   projectNumber: string;
   projectTitle: string;
-  subtitle: string;
+  projectUrl: string;
   techStack: string[];
 }
 
@@ -157,7 +157,7 @@ function renderProjectOverviewSlide({
   media,
   projectNumber,
   projectTitle,
-  subtitle,
+  projectUrl,
   techStack,
 }: ProjectOverviewSlideOptions) {
   return (
@@ -167,7 +167,14 @@ function renderProjectOverviewSlide({
           <span className="project-number">{projectNumber}</span>
           <h2 className="project-title">{projectTitle}</h2>
         </div>
-        <h3 className="project-subtitle stagger-2">{subtitle}</h3>
+        <a
+          className="project-link project-subtitle stagger-2"
+          href={projectUrl}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {projectUrl}
+        </a>
         <p className="project-description stagger-3">{description}</p>
         <div className="project-features stagger-4">
           <h4>{featuresLabel}</h4>
@@ -208,7 +215,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       ),
     },
     {
-      id: "slide-2",
+      id: "slide-3",
       title: copy.introduction.title,
       render: () => (
         <div className="slide-content project-split-layout">
@@ -247,7 +254,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       ),
     },
     {
-      id: "slide-3",
+      id: "slide-4",
       title: copy.mimesisOverview.title,
       render: () =>
         renderProjectOverviewSlide({
@@ -261,14 +268,14 @@ export function getSlides(locale: Locale): SlideDefinition[] {
               </video>
             </div>
           ),
+          projectUrl: copy.mimesisOverview.projectUrl,
           projectNumber: copy.mimesisOverview.projectNumber,
           projectTitle: copy.mimesisOverview.projectTitle,
-          subtitle: copy.mimesisOverview.subtitle,
           techStack: copy.mimesisOverview.techStack,
         }),
     },
     {
-      id: "slide-4",
+      id: "slide-5",
       title: copy.mimesisDetail1.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
@@ -280,7 +287,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-5",
+      id: "slide-6",
       title: copy.mimesisDetail2.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
@@ -292,7 +299,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-6",
+      id: "slide-7",
       title: copy.mimesisDetail3.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
@@ -304,7 +311,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-7",
+      id: "slide-8",
       title: copy.mimesisDetail4.title,
       render: (context) =>
         renderMimesisDetailSlide(context, {
@@ -316,7 +323,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-8",
+      id: "slide-9",
       title: copy.dsskillsOverview.title,
       render: () =>
         renderProjectOverviewSlide({
@@ -332,14 +339,14 @@ export function getSlides(locale: Locale): SlideDefinition[] {
               />
             </div>
           ),
+          projectUrl: copy.dsskillsOverview.projectUrl,
           projectNumber: copy.dsskillsOverview.projectNumber,
           projectTitle: copy.dsskillsOverview.projectTitle,
-          subtitle: copy.dsskillsOverview.subtitle,
           techStack: copy.dsskillsOverview.techStack,
         }),
     },
     {
-      id: "slide-9",
+      id: "slide-10",
       title: copy.dsskillsDetail1.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
@@ -354,7 +361,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-10",
+      id: "slide-11",
       title: copy.dsskillsDetail2.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
@@ -369,7 +376,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-11",
+      id: "slide-12",
       title: copy.sellpathOverview.title,
       render: () =>
         renderProjectOverviewSlide({
@@ -385,14 +392,14 @@ export function getSlides(locale: Locale): SlideDefinition[] {
               />
             </div>
           ),
+          projectUrl: copy.sellpathOverview.projectUrl,
           projectNumber: copy.sellpathOverview.projectNumber,
           projectTitle: copy.sellpathOverview.projectTitle,
-          subtitle: copy.sellpathOverview.subtitle,
           techStack: copy.sellpathOverview.techStack,
         }),
     },
     {
-      id: "slide-12",
+      id: "slide-13",
       title: copy.sellpathDetail1.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
@@ -407,7 +414,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-13",
+      id: "slide-14",
       title: copy.sellpathDetail2.title,
       render: (context) =>
         renderProjectImageDetailSlide(context, {
@@ -422,7 +429,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
         }),
     },
     {
-      id: "slide-14",
+      id: "slide-15",
       title: copy.contact.title,
       render: () => (
         <div className="slide-content outro-layout outro-layout--start-aligned">

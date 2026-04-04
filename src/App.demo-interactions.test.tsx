@@ -31,6 +31,8 @@ vi.mock("./mimesis/StaggeredTextSlideDemo", () => ({
 }));
 
 it("advances slides on wheel outside demo zones", () => {
+  window.history.replaceState({}, "", "/en");
+
   render(<App />);
 
   fireEvent.wheel(document.body, { deltaY: 100 });
@@ -41,6 +43,8 @@ it("advances slides on wheel outside demo zones", () => {
 });
 
 it("ignores demo-local wheel and keyboard events", () => {
+  window.history.replaceState({}, "", "/en");
+
   render(<App />);
 
   fireEvent.keyDown(document, { key: "ArrowRight" });
@@ -61,6 +65,8 @@ it("ignores demo-local wheel and keyboard events", () => {
 });
 
 it("keeps demo-local navigation blocked across consecutive mimesis detail slides", () => {
+  window.history.replaceState({}, "", "/en");
+
   render(<App />);
 
   fireEvent.keyDown(document, { key: "ArrowRight" });

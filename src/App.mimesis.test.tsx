@@ -41,6 +41,8 @@ function expectActiveDetailSlideLayout({
 }
 
 it("renders one mimesis demo per detail slide and mounts only the active implementation", () => {
+  window.history.replaceState({}, "", "/en");
+
   render(<App />);
 
   expect(document.querySelector("iframe")).toBeNull();

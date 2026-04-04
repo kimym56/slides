@@ -3,7 +3,7 @@ import { describe, expect, it } from "vitest";
 import { getSlides } from "./slideData";
 
 describe("slide deck data", () => {
-  it("includes split DSSkills and Sellpath detail slides in order", () => {
+  it("includes split DSSkills and Sellpath detail slides in order without the old interactive slide", () => {
     expect(getSlides("en").map((slide) => slide.title)).toEqual([
       "Portfolio",
       "Introduction",
@@ -22,8 +22,41 @@ describe("slide deck data", () => {
     ]);
   });
 
+  it("renders linked project URLs on the overview slides", () => {
+    const overviewSlides = [
+      {
+        id: "slide-4",
+        url: "https://ymkim-mimesis.vercel.app",
+      },
+      {
+        id: "slide-9",
+        url: "https://ymkim-dsskills.vercel.app",
+      },
+      {
+        id: "slide-12",
+        url: "https://www.sellpath.ai",
+      },
+    ];
+
+    for (const overviewSlide of overviewSlides) {
+      const slide = getSlides("en").find((entry) => entry.id === overviewSlide.id);
+
+      expect(slide).toBeDefined();
+
+      const { unmount } = render(<>{slide?.render({ isActive: true })}</>);
+
+      expect(
+        screen.getByRole("link", {
+          name: overviewSlide.url,
+        }),
+      ).toHaveAttribute("href", overviewSlide.url);
+
+      unmount();
+    }
+  });
+
   it("renders project detail image slides without the old placeholder-sized frame", () => {
-    const slide = getSlides("en").find((entry) => entry.id === "slide-9");
+    const slide = getSlides("en").find((entry) => entry.id === "slide-10");
 
     expect(slide).toBeDefined();
 
@@ -38,14 +71,14 @@ describe("slide deck data", () => {
 
   it("marks the requested detail slides to center their content within the layout", () => {
     const centeredDetailSlideIds = [
-      "slide-4",
+      "slide-10",
+      "slide-11",
+      "slide-13",
+      "slide-14",
       "slide-5",
       "slide-6",
       "slide-7",
-      "slide-9",
-      "slide-10",
-      "slide-12",
-      "slide-13",
+      "slide-8",
     ];
 
     for (const slideId of centeredDetailSlideIds) {
@@ -67,14 +100,14 @@ describe("slide deck data", () => {
 
   it("applies the larger text treatment to the requested detail slides", () => {
     const largerTextSlideIds = [
-      "slide-4",
       "slide-5",
       "slide-6",
       "slide-7",
-      "slide-9",
+      "slide-8",
       "slide-10",
-      "slide-12",
+      "slide-11",
       "slide-13",
+      "slide-14",
     ];
 
     for (const slideId of largerTextSlideIds) {
@@ -82,7 +115,9 @@ describe("slide deck data", () => {
 
       expect(slide).toBeDefined();
 
-      const { container, unmount } = render(<>{slide?.render({ isActive: false })}</>);
+      const { container, unmount } = render(
+        <>{slide?.render({ isActive: false })}</>,
+      );
 
       expect(container.querySelector(".details-copy")).toHaveClass(
         "details-copy--large-text",
@@ -93,7 +128,7 @@ describe("slide deck data", () => {
   });
 
   it("renders image detail slides with a lead line and bullet list", () => {
-    const slide = getSlides("en").find((entry) => entry.id === "slide-12");
+    const slide = getSlides("en").find((entry) => entry.id === "slide-13");
 
     expect(slide).toBeDefined();
 
@@ -112,7 +147,7 @@ describe("slide deck data", () => {
   });
 
   it("renders the page curl slide with a lead line, bullet list, and linked reference", () => {
-    const slide = getSlides("en").find((entry) => entry.id === "slide-4");
+    const slide = getSlides("en").find((entry) => entry.id === "slide-5");
 
     expect(slide).toBeDefined();
 
@@ -128,6 +163,7 @@ describe("slide deck data", () => {
       "href",
       "https://www.linkedin.com/posts/minsangchoi_metalshader-activity-7431057118914490368-L5TN/",
     );
+    expect(referenceLink).toHaveClass("reference-link");
     expect(referenceLink).toHaveAttribute("target", "_blank");
     expect(referenceLink).toHaveAttribute("rel", "noreferrer");
 
@@ -167,8 +203,43 @@ describe("slide deck data", () => {
       "03 — Sellpath 상세 2",
       "연락처",
     ]);
+  });
 
-    const introSlide = slides.find((entry) => entry.id === "slide-2");
+  it("renders linked project URLs on the Korean overview slides", () => {
+    const overviewSlides = [
+      {
+        id: "slide-4",
+        url: "https://ymkim-mimesis.vercel.app",
+      },
+      {
+        id: "slide-9",
+        url: "https://ymkim-dsskills.vercel.app",
+      },
+      {
+        id: "slide-12",
+        url: "https://www.sellpath.ai",
+      },
+    ];
+
+    for (const overviewSlide of overviewSlides) {
+      const slide = getSlides("ko").find((entry) => entry.id === overviewSlide.id);
+
+      expect(slide).toBeDefined();
+
+      const { unmount } = render(<>{slide?.render({ isActive: true })}</>);
+
+      expect(
+        screen.getByRole("link", {
+          name: overviewSlide.url,
+        }),
+      ).toHaveAttribute("href", overviewSlide.url);
+
+      unmount();
+    }
+  });
+
+  it("renders the Korean introduction slide in the second position", () => {
+    const introSlide = getSlides("ko")[1];
 
     expect(introSlide).toBeDefined();
 
@@ -180,7 +251,7 @@ describe("slide deck data", () => {
   });
 
   it("renders Korean Mimesis detail copy for the Korean locale", () => {
-    const slide = getSlides("ko").find((entry) => entry.id === "slide-4");
+    const slide = getSlides("ko").find((entry) => entry.id === "slide-5");
 
     expect(slide).toBeDefined();
 
@@ -190,12 +261,15 @@ describe("slide deck data", () => {
       screen.getByText(/iBooks와 Apple Maps에서 사용된 Page Curl 효과/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/페이지를 넘기듯 뒤집어 뒷면을 확인할 수 있습니다/i),
+      screen.getByText(/페이지를 넘기듯 뒤집으며 뒷면을 확인할 수 있습니다/i),
     ).toBeInTheDocument();
+    expect(screen.getByRole("link", { name: "Minsang Choi" })).toHaveClass(
+      "reference-link",
+    );
   });
 
   it("renders the Korean outro slide as a centered vertical contact list", () => {
-    const slide = getSlides("ko").find((entry) => entry.id === "slide-14");
+    const slide = getSlides("ko").find((entry) => entry.id === "slide-15");
 
     expect(slide).toBeDefined();
 
@@ -220,7 +294,10 @@ describe("slide deck data", () => {
     const contactItems = screen.getAllByRole("listitem");
 
     expect(contactItems).toHaveLength(4);
-    expect(contactItems[0]).toHaveClass("contact-item", "contact-item--bulleted");
+    expect(contactItems[0]).toHaveClass(
+      "contact-item",
+      "contact-item--bulleted",
+    );
 
     expect(
       screen.getByRole("link", {
@@ -244,7 +321,7 @@ describe("slide deck data", () => {
     ).toHaveAttribute("href", "https://github.com/kimym56");
     expect(
       screen.getByRole("link", {
-        name: "웹사이트 : ymkim-portfolio.vercel.app",
+        name: "웹사이트 : https://ymkim-portfolio.vercel.app",
       }),
     ).toHaveAttribute("href", "https://ymkim-portfolio.vercel.app");
   });

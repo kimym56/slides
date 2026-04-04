@@ -130,6 +130,38 @@ h1.hero-title {
   align-items: center;
 }
 
+.interactive-link-slide {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1.25rem;
+  text-align: center;
+}
+
+.interactive-link-copy {
+  max-width: none;
+  font-size: clamp(1rem, 2.2vw, 2.3rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  white-space: nowrap;
+}
+
+.interactive-link-url {
+  color: var(--text-main);
+  font-size: clamp(1rem, 2vw, 1.35rem);
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition: color 0.3s ease;
+}
+
+.interactive-link-url:hover {
+  color: var(--accent);
+}
+
 .hero-subtext {
   display: flex;
   justify-content: space-between;
@@ -263,14 +295,46 @@ h1.hero-title {
 }
 
 .project-subtitle {
-  font-size: 1.2rem;
-  font-weight: 500;
+  margin-top: -0.2rem;
+}
+
+.project-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  width: fit-content;
+  max-width: 100%;
+  padding: 0.55rem 0.8rem;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 12%, transparent);
+  border-radius: 999px;
+  background: color-mix(in srgb, var(--color-secondary) 4%, transparent);
   color: var(--text-main);
+  font-size: 0.95rem;
+  font-weight: 600;
   letter-spacing: 0.05em;
-  border-bottom: 1px solid
-    color-mix(in srgb, var(--color-secondary) 10%, transparent);
-  padding-bottom: 0.5rem;
-  margin-top: -0.5rem;
+  text-decoration: none;
+  overflow-wrap: anywhere;
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.project-link::after {
+  content: "\2197";
+  font-size: 0.88em;
+}
+
+.project-link:visited {
+  color: var(--text-main);
+}
+
+.project-link:hover {
+  color: var(--accent);
+  border-color: color-mix(in srgb, var(--accent) 36%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, transparent);
+  transform: translateY(-1px);
 }
 
 .project-description {
@@ -420,6 +484,7 @@ h1.hero-title {
 
 /* Project Details Layout */
 .project-details-layout {
+  --detail-section-gap: clamp(2.75rem, 4vw, 4.5rem);
   display: flex;
   flex-direction: column;
   gap: 2rem;
@@ -430,7 +495,7 @@ h1.hero-title {
   .project-details-layout {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 4rem;
+    gap: var(--detail-section-gap);
     align-items: start;
   }
 
@@ -464,15 +529,16 @@ h1.hero-title {
 
 .details-copy--structured {
   gap: 1rem;
-  max-width: 40ch;
+  max-width: 48ch;
 }
 
 .project-details-layout--content-centered .details-column {
   align-items: center;
+  min-width: 0;
 }
 
 .project-details-layout--content-centered .details-copy--structured {
-  width: min(100%, 40ch);
+  width: min(100%, 48ch);
   margin-inline: auto;
 }
 
@@ -524,6 +590,25 @@ h1.hero-title {
   height: 0.42rem;
   border-radius: 999px;
   background: color-mix(in srgb, var(--accent) 72%, var(--text-main));
+}
+
+.reference-link {
+  color: var(--text-main);
+  font-weight: 600;
+  text-decoration: none;
+  box-shadow: inset 0 -0.4em 0 color-mix(in srgb, var(--accent) 18%, transparent);
+  transition:
+    color 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.reference-link:visited {
+  color: var(--text-main);
+}
+
+.reference-link:hover {
+  color: var(--accent);
+  box-shadow: inset 0 -0.65em 0 color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .mt-2 {
@@ -616,6 +701,10 @@ h1.hero-title {
   .project-demo-slot {
     aspect-ratio: auto;
     height: 60vh;
+  }
+
+  .project-details-layout--content-centered .project-demo-slot {
+    margin-inline: auto;
   }
 
   .project-details-layout--content-centered .project-detail-image-slot {
@@ -725,6 +814,75 @@ h1.hero-title {
   width: 100%;
 }
 
+.locale-toggle {
+  position: fixed;
+  top: clamp(1.2rem, 3vw, 2.4rem);
+  right: var(--slide-padding);
+  z-index: 102;
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  pointer-events: auto;
+}
+
+.locale-toggle-link {
+  position: relative;
+  display: inline-block;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.locale-toggle-link:visited {
+  color: var(--text-muted);
+}
+
+.locale-toggle-link:hover {
+  color: var(--text-main);
+}
+
+.locale-toggle-divider {
+  color: color-mix(in srgb, var(--text-main) 20%, transparent);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  user-select: none;
+}
+
+.locale-toggle-link.is-active {
+  color: var(--text-main);
+}
+
+.locale-toggle-link.is-active::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.38rem;
+  height: 2px;
+  background: var(--accent);
+}
+
+@media (max-width: 720px) {
+  .locale-toggle {
+    gap: 0.4rem;
+  }
+
+  .locale-toggle-link,
+  .locale-toggle-divider {
+    font-size: 0.72rem;
+  }
+}
+
 /* Navigation overlay */
 .slider-nav {
   position: fixed;
@@ -832,4 +990,74 @@ h1.hero-title {
   opacity: 0.2;
   cursor: not-allowed;
   transform: none;
+}
+
+html[lang="ko"] .hero-subtext,
+html[lang="ko"] .project-description,
+html[lang="ko"] .project-link,
+html[lang="ko"] .details-lead,
+html[lang="ko"] .details-list-item,
+html[lang="ko"] .contact-link {
+  word-break: keep-all;
+  line-break: strict;
+}
+
+html[data-export-mode="pdf"],
+body[data-export-mode="pdf"] {
+  overflow: auto;
+}
+
+.deck-container--export {
+  width: 1920px;
+  height: auto;
+  min-height: 1080px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  perspective: none;
+}
+
+.deck-container--export .slide {
+  position: relative;
+  width: 1920px;
+  min-height: 1080px;
+  height: 1080px;
+  padding: 80px;
+  opacity: 1;
+  visibility: visible;
+  page-break-after: always;
+  break-after: page;
+}
+
+.deck-container--export .slide:last-child {
+  page-break-after: auto;
+  break-after: auto;
+}
+
+@media print {
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+
+  html,
+  body {
+    width: 1920px;
+    min-width: 1920px;
+    height: auto;
+    overflow: visible;
+    background: #fff;
+  }
+
+  .deck-container--export {
+    min-height: 0;
+    margin: 0;
+  }
+
+  .deck-container--export .slide {
+    width: 1920px;
+    min-height: 1080px;
+    height: 1080px;
+    padding: 80px;
+  }
 }
