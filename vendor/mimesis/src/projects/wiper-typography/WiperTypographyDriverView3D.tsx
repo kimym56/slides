@@ -15,17 +15,19 @@ import {
   useState,
 } from "react";
 import {
-  Box3,
   type BufferGeometry,
-  CanvasTexture,
+  type Object3D,
+  type PerspectiveCamera,
+} from "three";
+import {
   DoubleSide,
   LinearFilter,
-  type Object3D,
   PCFShadowMap,
-  type PerspectiveCamera,
   SRGBColorSpace,
-  Vector3,
-} from "three";
+} from "three/src/constants.js";
+import { Box3 } from "three/src/math/Box3.js";
+import { Vector3 } from "three/src/math/Vector3.js";
+import { CanvasTexture } from "three/src/textures/CanvasTexture.js";
 import type { InteractiveProjectProps } from "../types";
 import styles from "./WiperTypographyProject.module.css";
 import WiperTypographyTeslaModel, {

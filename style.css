@@ -588,7 +588,8 @@ h1.hero-title {
   color: var(--text-main);
   font-weight: 600;
   text-decoration: none;
-  box-shadow: inset 0 -0.4em 0 color-mix(in srgb, var(--accent) 18%, transparent);
+  box-shadow: inset 0 -0.4em 0
+    color-mix(in srgb, var(--accent) 18%, transparent);
   transition:
     color 0.25s ease,
     box-shadow 0.25s ease;
@@ -600,7 +601,8 @@ h1.hero-title {
 
 .reference-link:hover {
   color: var(--accent);
-  box-shadow: inset 0 -0.65em 0 color-mix(in srgb, var(--accent) 20%, transparent);
+  box-shadow: inset 0 -0.65em 0
+    color-mix(in srgb, var(--accent) 20%, transparent);
 }
 
 .mt-2 {

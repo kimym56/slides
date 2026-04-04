@@ -3,7 +3,10 @@
 import { useTexture } from "@react-three/drei";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useEffect, useMemo, useRef, useState } from "react";
-import * as THREE from "three";
+import { DoubleSide } from "three/src/constants.js";
+import { Vector2 } from "three/src/math/Vector2.js";
+import { ShaderLib } from "three/src/renderers/shaders/ShaderLib.js";
+import { UniformsUtils } from "three/src/renderers/shaders/UniformsUtils.js";
 import {
     resolvePageCurlPerformanceSettings,
     type PageCurlPerformancePreset,
@@ -216,12 +219,12 @@ function PageComponent({
     const [uniforms] = useState(() => ({
         uTex: { value: texture },
         uPeelDist: { value: 0.0 },
-        uOrigin: { value: new THREE.Vector2() },
-        uInward: { value: new THREE.Vector2() },
+        uOrigin: { value: new Vector2() },
+        uInward: { value: new Vector2() },
         uTargetAngleRad: { value: angle * (Math.PI / 180) },
         uOpacity: { value: opacity },
-        uSize: { value: new THREE.Vector2(size.w, size.h) },
-        uImageSize: { value: new THREE.Vector2(1024, 1024) },
+        uSize: { value: new Vector2(size.w, size.h) },
+        uImageSize: { value: new Vector2(1024, 1024) },
     }));
     const uniformsRef = useRef(uniforms);
 
@@ -267,7 +270,7 @@ function PageComponent({
     });
 
     const depthUniforms = useMemo(() => {
-        const d = THREE.UniformsUtils.clone(THREE.ShaderLib.depth.uniforms);
+        const d = UniformsUtils.clone(ShaderLib.depth.uniforms);
         d.uPeelDist = uniforms.uPeelDist;
         d.uOrigin = uniforms.uOrigin;
         d.uInward = uniforms.uInward;
@@ -276,7 +279,7 @@ function PageComponent({
     }, [uniforms]);
 
     const depthVertexShader = useMemo(() => {
-        let vs = THREE.ShaderLib.depth.vertexShader;
+        let vs = ShaderLib.depth.vertexShader;
         vs = `
             varying vec2 vMyUv;
             uniform float uPeelDist;
@@ -296,7 +299,7 @@ function PageComponent({
     }, []);
 
     const depthFragmentShader = useMemo(() => {
-        let fs = THREE.ShaderLib.depth.fragmentShader;
+        let fs = ShaderLib.depth.fragmentShader;
         fs = `
             varying vec2 vMyUv;
             uniform vec2 uSize;
@@ -327,7 +330,7 @@ function PageComponent({
                 vertexShader={vertexShader}
                 fragmentShader={fragmentShader}
                 uniforms={uniforms}
-                side={THREE.DoubleSide}
+                side={DoubleSide}
                 transparent={true}
             />
 
@@ -337,7 +340,7 @@ function PageComponent({
                 fragmentShader={depthFragmentShader}
                 uniforms={depthUniforms}
                 defines={{ DEPTH_PACKING: 3201 }}
-                side={THREE.DoubleSide}
+                side={DoubleSide}
             />
         </mesh>
     );

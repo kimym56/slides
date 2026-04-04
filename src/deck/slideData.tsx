@@ -1,11 +1,16 @@
-import type { ReactNode } from "react";
+import { Suspense, lazy, type ComponentType, type ReactNode } from "react";
 import { deckCopy, type Locale } from "./deckCopy";
-import BwCircleSlideDemo from "../mimesis/BwCircleSlideDemo";
-import PageCurlSlideDemo from "../mimesis/PageCurlSlideDemo";
-import StaggeredTextSlideDemo from "../mimesis/StaggeredTextSlideDemo";
-import WiperTypographySlideDemo from "../mimesis/WiperTypographySlideDemo";
 
 export type { Locale } from "./deckCopy";
+
+const PageCurlSlideDemo = lazy(() => import("../mimesis/PageCurlSlideDemo"));
+const WiperTypographySlideDemo = lazy(
+  () => import("../mimesis/WiperTypographySlideDemo"),
+);
+const BwCircleSlideDemo = lazy(() => import("../mimesis/BwCircleSlideDemo"));
+const StaggeredTextSlideDemo = lazy(
+  () => import("../mimesis/StaggeredTextSlideDemo"),
+);
 
 interface SlideDefinition {
   id: string;
@@ -68,6 +73,14 @@ function renderStructuredDetailsCopy(
         </ul>
       ) : null}
     </div>
+  );
+}
+
+function renderLazyMimesisDemo(DemoComponent: ComponentType) {
+  return (
+    <Suspense fallback={null}>
+      <DemoComponent />
+    </Suspense>
   );
 }
 
@@ -283,7 +296,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
           descriptions: copy.mimesisDetail1.descriptions,
           detailTitle: copy.mimesisDetail1.detailTitle,
           demoSide: "left",
-          renderDemo: () => <PageCurlSlideDemo />,
+          renderDemo: () => renderLazyMimesisDemo(PageCurlSlideDemo),
         }),
     },
     {
@@ -295,7 +308,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
           descriptions: copy.mimesisDetail2.descriptions,
           detailTitle: copy.mimesisDetail2.detailTitle,
           demoSide: "right",
-          renderDemo: () => <WiperTypographySlideDemo />,
+          renderDemo: () => renderLazyMimesisDemo(WiperTypographySlideDemo),
         }),
     },
     {
@@ -307,7 +320,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
           descriptions: copy.mimesisDetail3.descriptions,
           detailTitle: copy.mimesisDetail3.detailTitle,
           demoSide: "left",
-          renderDemo: () => <BwCircleSlideDemo />,
+          renderDemo: () => renderLazyMimesisDemo(BwCircleSlideDemo),
         }),
     },
     {
@@ -319,7 +332,7 @@ export function getSlides(locale: Locale): SlideDefinition[] {
           descriptions: copy.mimesisDetail4.descriptions,
           detailTitle: copy.mimesisDetail4.detailTitle,
           demoSide: "right",
-          renderDemo: () => <StaggeredTextSlideDemo />,
+          renderDemo: () => renderLazyMimesisDemo(StaggeredTextSlideDemo),
         }),
     },
     {

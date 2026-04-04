@@ -1,7 +1,7 @@
 "use client";
 
 import { forwardRef } from "react";
-import { MeshStandardMaterial } from "three";
+import { MeshStandardMaterial } from "three/src/materials/MeshStandardMaterial.js";
 import type * as THREE from "three";
 import {
   WIPER_3D_GLYPH_SIDE_COLOR,

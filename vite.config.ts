@@ -46,8 +46,44 @@ function emitStaticLocaleEntryHtml(localeEntries = ["en", "kr"]) {
   };
 }
 
+function resolveManualChunk(id: string) {
+  if (!id.includes("/node_modules/")) {
+    return undefined;
+  }
+
+  if (id.includes("/node_modules/three/examples/")) {
+    return "three-examples";
+  }
+
+  if (id.includes("/node_modules/three/")) {
+    return "three";
+  }
+
+  if (id.includes("/node_modules/@react-three/fiber/")) {
+    return "react-three-fiber";
+  }
+
+  if (id.includes("/node_modules/@react-three/drei/")) {
+    return "react-three-drei";
+  }
+
+  if (id.includes("/node_modules/framer-motion/")) {
+    return "framer-motion";
+  }
+
+  return undefined;
+}
+
 export default defineConfig(({ mode }) => ({
   plugins: [react(), emitStaticLocaleEntryHtml()],
+  build: {
+    chunkSizeWarningLimit: 750,
+    rollupOptions: {
+      output: {
+        manualChunks: resolveManualChunk,
+      },
+    },
+  },
   resolve: {
     dedupe: [
       "react",

@@ -1,4 +1,5 @@
-import { ExtrudeGeometry, Vector3 } from "three";
+import { ExtrudeGeometry } from "three/src/geometries/ExtrudeGeometry.js";
+import { Vector3 } from "three/src/math/Vector3.js";
 import helvetikerRegular from "three/examples/fonts/helvetiker_regular.typeface.json";
 import {
   FontLoader,

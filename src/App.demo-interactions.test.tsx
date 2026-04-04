@@ -42,7 +42,7 @@ it("advances slides on wheel outside demo zones", () => {
   ).toBeInTheDocument();
 });
 
-it("ignores demo-local wheel and keyboard events", () => {
+it("ignores demo-local wheel and keyboard events", async () => {
   window.history.replaceState({}, "", "/en");
 
   render(<App />);
@@ -51,7 +51,7 @@ it("ignores demo-local wheel and keyboard events", () => {
   fireEvent.keyDown(document, { key: "ArrowRight" });
   fireEvent.keyDown(document, { key: "ArrowRight" });
 
-  const demoZone = screen.getAllByTestId("mimesis-demo-frame")[0];
+  const demoZone = await screen.findByTestId("mimesis-demo-frame");
 
   fireEvent.wheel(demoZone, { deltaY: 100 });
   expect(
@@ -64,7 +64,7 @@ it("ignores demo-local wheel and keyboard events", () => {
   ).toBeInTheDocument();
 });
 
-it("keeps demo-local navigation blocked across consecutive mimesis detail slides", () => {
+it("keeps demo-local navigation blocked across consecutive mimesis detail slides", async () => {
   window.history.replaceState({}, "", "/en");
 
   render(<App />);
@@ -78,7 +78,7 @@ it("keeps demo-local navigation blocked across consecutive mimesis detail slides
     screen.getByText("01 — Mimesis Details 2", { selector: "#current-section" }),
   ).toBeInTheDocument();
 
-  const demoZone = screen.getAllByTestId("mimesis-demo-frame")[0];
+  const demoZone = await screen.findByTestId("mimesis-demo-frame");
 
   fireEvent.wheel(demoZone, { deltaY: 100 });
   fireEvent.keyDown(demoZone, { key: "ArrowRight" });

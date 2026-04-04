@@ -132,3 +132,37 @@ it("emits static /en and /kr html entries for hosts without SPA rewrites", async
     rmSync(tempRoot, { force: true, recursive: true });
   }
 });
+
+it("splits heavy 3D runtime packages into dedicated manual chunks", () => {
+  const config = getBuildConfig();
+  const output = config.build?.rollupOptions?.output;
+  const manualChunks = Array.isArray(output) ? output[0]?.manualChunks : output?.manualChunks;
+
+  expect(manualChunks).toBeTypeOf("function");
+
+  if (typeof manualChunks !== "function") {
+    return;
+  }
+
+  expect(
+    manualChunks("/repo/node_modules/three/build/three.module.js"),
+  ).toBe("three");
+  expect(
+    manualChunks("/repo/node_modules/three/examples/jsm/loaders/GLTFLoader.js"),
+  ).toBe("three-examples");
+  expect(
+    manualChunks("/repo/node_modules/@react-three/fiber/dist/react-three-fiber.esm.js"),
+  ).toBe("react-three-fiber");
+  expect(
+    manualChunks("/repo/node_modules/@react-three/drei/core/useTexture.js"),
+  ).toBe("react-three-drei");
+  expect(
+    manualChunks("/repo/node_modules/framer-motion/dist/es/index.mjs"),
+  ).toBe("framer-motion");
+});
+
+it("raises the chunk warning threshold to match the deferred 3D runtime split", () => {
+  const config = getBuildConfig();
+
+  expect(config.build?.chunkSizeWarningLimit).toBe(750);
+});

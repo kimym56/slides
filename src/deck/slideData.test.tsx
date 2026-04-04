@@ -236,7 +236,7 @@ describe("slide deck data", () => {
     render(<>{staggeredTextSlide?.render({ isActive: false })}</>);
 
     expect(
-      screen.getByText(/text interaction that applies staggering motion/i),
+      screen.getByText(/text interaction that uses staggered motion/i),
     ).toBeInTheDocument();
     expect(
       screen.getByText(/dynamic motion previews based on user text input and click interactions/i),
