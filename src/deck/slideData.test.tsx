@@ -146,6 +146,32 @@ describe("slide deck data", () => {
     ).toBeInTheDocument();
   });
 
+  it("renders synced English DSSkills detail copy", () => {
+    const detailSlide1 = getSlides("en").find((entry) => entry.id === "slide-10");
+
+    expect(detailSlide1).toBeDefined();
+
+    const { unmount } = render(<>{detailSlide1?.render({ isActive: true })}</>);
+
+    expect(screen.getByText("Agent Skill Selection")).toBeInTheDocument();
+    expect(
+      screen.getByText(/GitHub star counts and descriptions/i),
+    ).toBeInTheDocument();
+
+    unmount();
+
+    const detailSlide2 = getSlides("en").find((entry) => entry.id === "slide-11");
+
+    expect(detailSlide2).toBeDefined();
+
+    render(<>{detailSlide2?.render({ isActive: true })}</>);
+
+    expect(screen.getByText("Design System Component")).toBeInTheDocument();
+    expect(
+      screen.getByText(/generated outputs are also provided as code/i),
+    ).toBeInTheDocument();
+  });
+
   it("renders the page curl slide with a lead line, bullet list, and linked reference", () => {
     const slide = getSlides("en").find((entry) => entry.id === "slide-5");
 
@@ -153,8 +179,9 @@ describe("slide deck data", () => {
 
     render(<>{slide?.render({ isActive: false })}</>);
 
+    expect(screen.getByText("iOS Page Curl Effect")).toBeInTheDocument();
     expect(
-      screen.getByText(/The corner-peel effect used in iBooks and Apple Maps/i),
+      screen.getByText(/recreated the Page Curl effect used in iBooks and Apple Maps/i),
     ).toBeInTheDocument();
 
     const referenceLink = screen.getByRole("link", { name: "Minsang Choi" });
@@ -168,7 +195,7 @@ describe("slide deck data", () => {
     expect(referenceLink).toHaveAttribute("rel", "noreferrer");
 
     const lead = screen.getByText(
-      /The corner-peel effect used in iBooks and Apple Maps/i,
+      /recreated the Page Curl effect used in iBooks and Apple Maps/i,
     );
     const bulletList = screen.getByRole("list");
     const bulletItems = screen.getAllByRole("listitem");
@@ -180,7 +207,39 @@ describe("slide deck data", () => {
       screen.getByText(/original implementation created in iOS SwiftUI/i),
     ).toBeInTheDocument();
     expect(
-      screen.getByText(/users can drag any corner to peel the page back/i),
+      screen.getByText(/users can drag any corner and flip the page as if turning it/i),
+    ).toBeInTheDocument();
+  });
+
+  it("renders synced English copy for the later Mimesis detail slides", () => {
+    const blackWhiteCircleSlide = getSlides("en").find((entry) => entry.id === "slide-7");
+
+    expect(blackWhiteCircleSlide).toBeDefined();
+
+    const { unmount } = render(
+      <>{blackWhiteCircleSlide?.render({ isActive: false })}</>,
+    );
+
+    expect(
+      screen.getByText(/Yin and Yang Dynamics project/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/Because YouTube policy prevents direct audio extraction/i),
+    ).toBeInTheDocument();
+
+    unmount();
+
+    const staggeredTextSlide = getSlides("en").find((entry) => entry.id === "slide-8");
+
+    expect(staggeredTextSlide).toBeDefined();
+
+    render(<>{staggeredTextSlide?.render({ isActive: false })}</>);
+
+    expect(
+      screen.getByText(/text interaction that applies staggering motion/i),
+    ).toBeInTheDocument();
+    expect(
+      screen.getByText(/dynamic motion previews based on user text input and click interactions/i),
     ).toBeInTheDocument();
   });
 

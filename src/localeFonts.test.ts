@@ -37,6 +37,16 @@ it("keeps the second slide introduction layout in its original lightweight style
   expect(styleCss).not.toContain('html[lang="ko"] .intro-sentence,');
 });
 
+it("styles overview project links as plain text with only an external-link icon", () => {
+  const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
+
+  expect(styleCss).toMatch(/\.project-link\s*\{[^}]*padding:\s*0;/s);
+  expect(styleCss).toMatch(/\.project-link\s*\{[^}]*border:\s*0;/s);
+  expect(styleCss).toMatch(/\.project-link\s*\{[^}]*background:\s*none;/s);
+  expect(styleCss).not.toMatch(/\.project-link\s*\{[^}]*border-radius:\s*999px;/s);
+  expect(styleCss).toContain('.project-link::after');
+});
+
 it("styles the locale toggle as editorial text instead of a capsule control", () => {
   const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
 

@@ -115,8 +115,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     },
     dsskillsDetail1: {
       descriptions: [
-        "Users can generate design system components by applying currently popular UI-related agent skills.",
-        "Users can select both the target design system component and the skills to immediately see what kind of output is produced.",
+        "Users can generate design system components by applying popular UI-related agent skills.",
+        "Users can select both the target component and the skills to immediately see what kind of output is produced.",
+        "GitHub star counts and descriptions are surfaced before selection so users can evaluate the skills in context.",
       ],
       detailTitle: "Agent Skill Selection",
       imageAlt: "DSSkills prompt engineering screenshot",
@@ -126,8 +127,9 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       descriptions: [
         "Generated results can be previewed immediately.",
         "Previous outputs can also be reviewed through the history view.",
+        "Generated outputs are also provided as code so users can apply them directly.",
       ],
-      detailTitle: "Design System Component Output and Code",
+      detailTitle: "Design System Component",
       imageAlt: "DSSkills validation sandbox screenshot",
       title: "02 — DSSkills Details 2",
     },
@@ -157,21 +159,21 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     },
     introduction: {
       educationDate: "20.03 - 23.08",
-      educationDegree: "Yonsei University - Bachelor of Computer Science",
+      educationDegree: "Yonsei University - B.S. in Computer Science",
       educationLabel: "Education",
       experienceDate: "24.02 - 26.01",
       experienceLabel: "Experience",
       experienceRole: "Sellpath.inc - Frontend Engineer",
       greeting: "Hello",
-      profileAlt: "YongMin Kim",
+      profileAlt: "Profile photo of YongMin Kim",
       sentence:
-        "I am YongMin Kim, a Design Engineer dedicated to crafting 'optimal experiences' at the intersection of technology and design.",
+        "I’m YongMin Kim, a design engineer focused on creating the best possible experiences at the intersection of technology and design.",
       title: "Introduction",
     },
     mimesisDetail1: {
       descriptions: [
-        "The corner-peel effect used in iBooks and Apple Maps.",
-        "Users can drag any corner to peel the page back and reveal the reverse side.",
+        "Recreated the Page Curl effect used in iBooks and Apple Maps.",
+        "Users can drag any corner and flip the page as if turning it to reveal the reverse side.",
         <>
           Inspired by{" "}
           {createReferenceLink(
@@ -182,26 +184,25 @@ export const deckCopy: Record<Locale, DeckCopy> = {
         </>,
         "Rebuilt in R3F(React Three Fiber) based on an original implementation created in iOS SwiftUI.",
       ],
-      detailTitle:
-        "An interactive recreation of the classic iOS page curl transition",
+      detailTitle: "iOS Page Curl Effect",
       title: "01 — Mimesis Details",
     },
     mimesisDetail2: {
       descriptions: [
-        "A typography-based wipe simulation inspired by FFF, where a moving band mechanically reveals and transforms text in real time with cursor control.",
+        "A typography-based wiper simulation inspired by FFF that reveals and transforms text in real time as the wiper moves.",
         <>
           Inspired by{" "}
           {createReferenceLink("Jongmin Kim", "https://blog.cmiscm.com/?page_id=3023")}
           .
         </>,
-        "Recreated in R3F(React Three Fiber) by combining the original HTML/CSS-based work with a Tesla 3D model.",
+        "Recreated in R3F(React Three Fiber) by combining the original HTML/CSS work with a Tesla 3D model.",
       ],
       detailTitle: "Wiper Typography",
       title: "01 — Mimesis Details 2",
     },
     mimesisDetail3: {
       descriptions: [
-        "A monochrome yin-yang playground recreating SABUM’s black and white circle study, featuring a secondary pseudo-sync mode driven by YouTube playback time.",
+        "A recreation of the Yin and Yang Dynamics project that analyzes audio from a YouTube video to drive particle motion in real time.",
         <>
           Inspired by{" "}
           {createReferenceLink(
@@ -210,14 +211,14 @@ export const deckCopy: Record<Locale, DeckCopy> = {
           )}
           .
         </>,
-        "Embedded YouTube and analyzed browser audio output to drive particle motion in real time.",
+        "Because YouTube policy prevents direct audio extraction, it analyzes the browser's audio output instead to animate the particles in real time.",
       ],
       detailTitle: "Black & White Circle",
       title: "01 — Mimesis Details 3",
     },
     mimesisDetail4: {
       descriptions: [
-        "A CSS-first recreation of Rauno Freiberg’s staggered hover lettering, where each character flips through a soft 3D cascade on hover or press.",
+        "A text interaction that uses staggered motion to create a soft 3D effect when the screen is clicked.",
         <>
           Inspired by{" "}
           {createReferenceLink(
@@ -226,7 +227,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
           )}
           .
         </>,
-        "Recreated a similar interaction using Framer Motion, with dynamic motion previews based on user text input and click interactions.",
+        "Recreated a similar interaction with Framer Motion, providing dynamic motion previews based on user text input and click interactions.",
       ],
       detailTitle: "Staggered Text",
       title: "01 — Mimesis Details 4",
@@ -353,7 +354,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
     },
     dsskillsOverview: {
       description:
-        "UI 관련 에이전트 스킬을 디자인 시스템 컴포넌트에 빠르게 적용하고 결과를 즉시 미리볼 수 있는 플레이그라운드입니다.",
+        "최근 주목받는 UI 관련 에이전트 스킬을 디자인 시스템 컴포넌트에 빠르게 적용하고 결과를 즉시 미리볼 수 있는 플레이그라운드입니다.",
       features: [
         "OpenAI API 기반 생성",
         "즉시 결과 미리보기",
@@ -480,7 +481,7 @@ export const deckCopy: Record<Locale, DeckCopy> = {
       descriptions: [
         "Activity Modal의 왼쪽 섹션",
         "세일즈 워크플로우에 필요한 핵심 기능을 한 곳에 모은 모달입니다.",
-        "고객 컨텍스트을 한눈에 파악할 수 있도록 구성했습니다.",
+        "고객 컨텍스트를 한눈에 파악할 수 있도록 구성했습니다.",
         "실시간 데이터와 AI 분석을 기반으로 고객 참여도와 감정 상태를 요약한 데이터 시각화를 제공합니다.",
         "세일즈 팀이 고객 상태를 빠르게 이해하고 더 나은 의사결정을 내릴 수 있도록 설계했습니다.",
       ],
