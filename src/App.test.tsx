@@ -32,7 +32,9 @@ it("renders the first slide and deck chrome from the React shell on /en", () => 
 
   expect(screen.getByText("stub slide")).toBeInTheDocument();
   expect(screen.getByText("Portfolio")).toBeInTheDocument();
-  expect(screen.getByText("1 / 2")).toBeInTheDocument();
+  expect(screen.getByText("1", { selector: "#slide-counter-current" })).toBeInTheDocument();
+  expect(screen.getByText("/", { selector: "#slide-counter-divider" })).toBeInTheDocument();
+  expect(screen.getByText("2", { selector: "#slide-counter-total" })).toBeInTheDocument();
 });
 
 it("renders Korean deck chrome when pathname ends with /kr", () => {
@@ -80,5 +82,5 @@ it("renders all Korean slides and hides deck chrome in pdf export mode", () => {
   expect(screen.getByText("두 번째 슬라이드")).toBeInTheDocument();
   expect(screen.queryByLabelText("이전 슬라이드")).not.toBeInTheDocument();
   expect(screen.queryByLabelText("다음 슬라이드")).not.toBeInTheDocument();
-  expect(screen.queryByText("1 / 2")).not.toBeInTheDocument();
+  expect(screen.queryByText("1", { selector: "#slide-counter-current" })).not.toBeInTheDocument();
 });

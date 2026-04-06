@@ -935,6 +935,171 @@ h1.hero-title {
   text-transform: uppercase;
 }
 
+.current-section-shell {
+  position: relative;
+  pointer-events: auto;
+}
+
+.current-section-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  transition:
+    color 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.current-section-text {
+  min-width: 0;
+}
+
+.current-section-chevron {
+  width: 0.8rem;
+  height: 0.8rem;
+  flex: none;
+  opacity: 0.65;
+  transform: rotate(180deg);
+  transition:
+    transform 0.25s ease,
+    opacity 0.25s ease;
+}
+
+.current-section-trigger:hover,
+.current-section-trigger:focus-visible,
+.current-section-trigger.is-open {
+  color: var(--text-main);
+}
+
+.current-section-trigger:hover .current-section-chevron,
+.current-section-trigger:focus-visible .current-section-chevron,
+.current-section-trigger.is-open .current-section-chevron {
+  opacity: 1;
+}
+
+.current-section-trigger.is-open .current-section-chevron {
+  transform: rotate(0deg);
+}
+
+.current-section-trigger:focus-visible,
+.slide-list-button:focus-visible,
+.slide-counter-trigger:focus-visible,
+.page-jump-input:focus-visible {
+  outline: none;
+}
+
+.slide-list-popover {
+  position: absolute;
+  left: 0;
+  bottom: calc(100% + 1rem);
+  width: fit-content;
+  max-width: min(30rem, calc(100vw - (var(--slide-padding) * 2)));
+  padding: 0.35rem 0.2rem 0.35rem 0;
+  overflow: hidden;
+  border: 1px solid color-mix(in srgb, var(--color-secondary) 14%, transparent);
+  border-radius: 18px;
+  background: linear-gradient(
+    180deg,
+    color-mix(in srgb, white 92%, transparent),
+    color-mix(in srgb, white 84%, transparent)
+  );
+  box-shadow:
+    0 18px 40px rgba(15, 23, 42, 0.14),
+    0 4px 10px rgba(15, 23, 42, 0.08);
+  backdrop-filter: blur(18px);
+}
+
+.slide-list-scroll-region {
+  width: fit-content;
+  max-width: 100%;
+  max-height: min(14rem, 52vh);
+  padding: 0.15rem 0.7rem 0.15rem 0.75rem;
+  overflow-y: auto;
+  scrollbar-gutter: stable;
+  scrollbar-color: color-mix(in srgb, var(--text-main) 24%, transparent)
+    transparent;
+}
+
+.slide-list-scroll-region::-webkit-scrollbar {
+  width: 0.55rem;
+}
+
+.slide-list-scroll-region::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.slide-list-scroll-region::-webkit-scrollbar-thumb {
+  background-color: color-mix(in srgb, var(--text-main) 24%, transparent);
+  border: 0.12rem solid transparent;
+  border-radius: 999px;
+  background-clip: padding-box;
+}
+
+.slide-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  width: max-content;
+  max-width: 100%;
+  gap: 0.28rem;
+}
+
+.slide-list-item {
+  margin: 0;
+}
+
+.slide-list-button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.9rem;
+  padding: 0.7rem 1.1rem;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  text-align: left;
+  transition:
+    border-color 0.2s ease,
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.slide-list-button:hover,
+.slide-list-button:focus-visible,
+.slide-list-button.is-active {
+  border-color: color-mix(in srgb, var(--accent) 20%, transparent);
+  background: color-mix(in srgb, var(--accent) 8%, white);
+  color: var(--text-main);
+}
+
+.slide-list-button:focus-visible,
+.slide-counter-trigger:focus-visible {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent);
+}
+
+.slide-list-number {
+  min-width: 1.5rem;
+  font-family:
+    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
+    "Courier New", monospace;
+  font-size: 0.78rem;
+  color: color-mix(in srgb, var(--text-main) 68%, transparent);
+}
+
+.slide-list-title {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .progress-bar {
   position: fixed;
   top: 0;
@@ -963,6 +1128,79 @@ h1.hero-title {
   font-family: monospace;
 }
 
+.slide-counter-shell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.slide-counter-display {
+  display: flex;
+  align-items: baseline;
+  gap: 0.45rem;
+}
+
+.slide-counter-current-slot {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  flex: none;
+  min-width: 0;
+}
+
+.slide-counter-trigger {
+  width: 100%;
+  min-height: 1.65rem;
+  padding: 0.08rem 0.18rem 0.12rem;
+  border: none;
+  border-bottom: 0.08em solid
+    color-mix(in srgb, var(--text-main) 24%, transparent);
+  color: var(--text-main);
+  border-radius: 0;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+  transition:
+    border-color 0.2s ease,
+    color 0.2s ease,
+    opacity 0.2s ease;
+}
+
+.slide-counter-trigger:hover,
+.slide-counter-trigger:focus-visible {
+  background: none;
+  border-color: var(--accent);
+  color: var(--text-main);
+}
+
+.page-jump-input {
+  width: 100%;
+  min-height: 1.65rem;
+  padding: 0.08rem 0.18rem 0.12rem;
+  border: none;
+  border-bottom: 0.08em solid var(--accent);
+  border-radius: 0;
+  background: transparent;
+  caret-color: var(--accent);
+  color: var(--text-main);
+  font: inherit;
+  font-weight: 600;
+  line-height: 1;
+  text-align: center;
+}
+
+.slide-counter-divider {
+  color: color-mix(in srgb, var(--text-main) 46%, transparent);
+}
+
+.slide-counter-total {
+  color: color-mix(in srgb, var(--text-main) 72%, transparent);
+}
+
 .nav-btn {
   background: none;
   border: none;
@@ -984,6 +1222,37 @@ h1.hero-title {
   opacity: 0.2;
   cursor: not-allowed;
   transform: none;
+}
+
+@media (max-width: 720px) {
+  .slider-nav {
+    padding-top: 1.4rem;
+    padding-bottom: 1.4rem;
+  }
+
+  .keyboard-help {
+    display: none;
+  }
+
+  .current-section-label {
+    max-width: 48vw;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .slide-list-popover {
+    max-width: min(21rem, calc(100vw - (var(--slide-padding) * 2)));
+  }
+
+  .slide-list-scroll-region {
+    max-height: 12.75rem;
+  }
+
+  .controls {
+    gap: 0.75rem;
+    font-size: 1rem;
+  }
 }
 
 html[lang="ko"] .hero-subtext,

@@ -1,0 +1,246 @@
+<style>
+  .cards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .counter-card {
+    padding: 1rem;
+  }
+
+  .counter-card .label {
+    margin-bottom: 0.35rem;
+  }
+
+  .footer-preview {
+    border-radius: 22px;
+    padding: 1rem 1.1rem;
+    background:
+      linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.94),
+        rgba(248, 248, 246, 0.92)
+      );
+    border: 1px solid rgba(36, 36, 34, 0.1);
+    box-shadow:
+      0 18px 40px rgba(15, 23, 42, 0.08),
+      inset 0 1px 0 rgba(255, 255, 255, 0.8);
+  }
+
+  .footer-row {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.9rem;
+    font-family:
+      "SFMono-Regular", ui-monospace, Menlo, Monaco, Consolas, monospace;
+    color: rgba(36, 36, 34, 0.82);
+  }
+
+  .nav-icon {
+    color: rgba(36, 36, 34, 0.5);
+    font-size: 0.95rem;
+  }
+
+  .counter-inline {
+    display: flex;
+    align-items: center;
+    gap: 0.38rem;
+    font-size: 0.98rem;
+  }
+
+  .counter-divider {
+    color: rgba(36, 36, 34, 0.38);
+  }
+
+  .counter-total {
+    color: rgba(36, 36, 34, 0.6);
+  }
+
+  .token {
+    min-width: 2.05rem;
+    text-align: center;
+    line-height: 1;
+  }
+
+  .token-soft {
+    padding: 0.42rem 0.68rem 0.48rem;
+    border-radius: 999px;
+    border: 1px solid rgba(36, 36, 34, 0.1);
+    background: rgba(255, 255, 255, 0.88);
+    font-weight: 600;
+  }
+
+  .token-soft-edit {
+    border-color: rgba(255, 51, 31, 0.32);
+    background: rgba(255, 255, 255, 0.96);
+    color: rgba(36, 36, 34, 0.96);
+  }
+
+  .token-flat {
+    padding: 0.22rem 0 0.3rem;
+    border-bottom: 1px solid rgba(36, 36, 34, 0.24);
+    font-weight: 600;
+  }
+
+  .token-flat-edit {
+    border-bottom-color: rgba(255, 51, 31, 0.7);
+  }
+
+  .token-tray-wrap {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.36rem;
+    padding: 0.3rem 0.38rem;
+    border-radius: 999px;
+    background: rgba(36, 36, 34, 0.05);
+    border: 1px solid rgba(36, 36, 34, 0.06);
+  }
+
+  .token-tray {
+    padding: 0.36rem 0.56rem 0.42rem;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.92);
+    font-weight: 600;
+  }
+
+  .token-tray-edit {
+    box-shadow: inset 0 0 0 1px rgba(255, 51, 31, 0.36);
+  }
+
+  .state-stack {
+    display: grid;
+    gap: 0.8rem;
+    margin-top: 1rem;
+  }
+
+  .state-label {
+    font-size: 0.68rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(36, 36, 34, 0.46);
+    margin-bottom: 0.35rem;
+  }
+
+  .card-body p strong {
+    color: rgba(36, 36, 34, 0.96);
+  }
+</style>
+
+<h2>Which right-footer page control feels right?</h2>
+<p class="subtitle">Focus on the current page value only. The divider and total stay static. I recommend <strong>B</strong> if you want the cleanest production-safe fix.</p>
+
+<div class="cards">
+  <div class="card counter-card" data-choice="a" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="footer-preview">
+        <div class="state-stack">
+          <div>
+            <div class="state-label">Idle</div>
+            <div class="footer-row">
+              <span class="nav-icon">‹</span>
+              <div class="counter-inline">
+                <span class="token token-flat">12</span>
+                <span class="counter-divider">/</span>
+                <span class="counter-total">31</span>
+              </div>
+              <span class="nav-icon">›</span>
+            </div>
+          </div>
+          <div>
+            <div class="state-label">Editing</div>
+            <div class="footer-row">
+              <span class="nav-icon">‹</span>
+              <div class="counter-inline">
+                <span class="token token-flat token-flat-edit">12</span>
+                <span class="counter-divider">/</span>
+                <span class="counter-total">31</span>
+              </div>
+              <span class="nav-icon">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="label">A</div>
+      <h3>Editorial Line</h3>
+      <p><strong>Very quiet</strong>, but still a little close to the underline problem you disliked.</p>
+    </div>
+  </div>
+
+  <div class="card counter-card" data-choice="b" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="footer-preview">
+        <div class="state-stack">
+          <div>
+            <div class="state-label">Idle</div>
+            <div class="footer-row">
+              <span class="nav-icon">‹</span>
+              <div class="counter-inline">
+                <span class="token token-soft">12</span>
+                <span class="counter-divider">/</span>
+                <span class="counter-total">31</span>
+              </div>
+              <span class="nav-icon">›</span>
+            </div>
+          </div>
+          <div>
+            <div class="state-label">Editing</div>
+            <div class="footer-row">
+              <span class="nav-icon">‹</span>
+              <div class="counter-inline">
+                <span class="token token-soft token-soft-edit">12</span>
+                <span class="counter-divider">/</span>
+                <span class="counter-total">31</span>
+              </div>
+              <span class="nav-icon">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="label">B</div>
+      <h3>Quiet Lozenge</h3>
+      <p><strong>Recommended.</strong> Clear affordance, but flatter and calmer than the current pill.</p>
+    </div>
+  </div>
+
+  <div class="card counter-card" data-choice="c" onclick="toggleSelect(this)">
+    <div class="card-image">
+      <div class="footer-preview">
+        <div class="state-stack">
+          <div>
+            <div class="state-label">Idle</div>
+            <div class="footer-row">
+              <span class="nav-icon">‹</span>
+              <div class="token-tray-wrap">
+                <span class="token-tray">12</span>
+                <span class="counter-divider">/</span>
+                <span class="counter-total">31</span>
+              </div>
+              <span class="nav-icon">›</span>
+            </div>
+          </div>
+          <div>
+            <div class="state-label">Editing</div>
+            <div class="footer-row">
+              <span class="nav-icon">‹</span>
+              <div class="token-tray-wrap">
+                <span class="token-tray token-tray-edit">12</span>
+                <span class="counter-divider">/</span>
+                <span class="counter-total">31</span>
+              </div>
+              <span class="nav-icon">›</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <div class="label">C</div>
+      <h3>Shared Tray</h3>
+      <p><strong>Most integrated</strong>, but it puts more visual weight on the whole counter.</p>
+    </div>
+  </div>
+</div>

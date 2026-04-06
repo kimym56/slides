@@ -37,9 +37,7 @@ it("advances slides on wheel outside demo zones", () => {
 
   fireEvent.wheel(document.body, { deltaY: 100 });
 
-  expect(
-    screen.getByText("Introduction", { selector: "#current-section" }),
-  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "Introduction" })).toBeInTheDocument();
 });
 
 it("ignores demo-local wheel and keyboard events", async () => {
@@ -54,14 +52,10 @@ it("ignores demo-local wheel and keyboard events", async () => {
   const demoZone = await screen.findByTestId("mimesis-demo-frame");
 
   fireEvent.wheel(demoZone, { deltaY: 100 });
-  expect(
-    screen.getByText("01 — Mimesis Details", { selector: "#current-section" }),
-  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "01 — Mimesis Details" })).toBeInTheDocument();
 
   fireEvent.keyDown(demoZone, { key: "ArrowRight" });
-  expect(
-    screen.getByText("01 — Mimesis Details", { selector: "#current-section" }),
-  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "01 — Mimesis Details" })).toBeInTheDocument();
 });
 
 it("keeps demo-local navigation blocked across consecutive mimesis detail slides", async () => {
@@ -74,16 +68,12 @@ it("keeps demo-local navigation blocked across consecutive mimesis detail slides
   fireEvent.keyDown(document, { key: "ArrowRight" });
   fireEvent.keyDown(document, { key: "ArrowRight" });
 
-  expect(
-    screen.getByText("01 — Mimesis Details 2", { selector: "#current-section" }),
-  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "01 — Mimesis Details 2" })).toBeInTheDocument();
 
   const demoZone = await screen.findByTestId("mimesis-demo-frame");
 
   fireEvent.wheel(demoZone, { deltaY: 100 });
   fireEvent.keyDown(demoZone, { key: "ArrowRight" });
 
-  expect(
-    screen.getByText("01 — Mimesis Details 2", { selector: "#current-section" }),
-  ).toBeInTheDocument();
+  expect(screen.getByRole("button", { name: "01 — Mimesis Details 2" })).toBeInTheDocument();
 });

@@ -83,3 +83,84 @@ it("standardizes detail-page spacing with one shared desktop gutter and centered
     ".project-details-layout--content-centered > .details-column:last-child .details-copy--structured",
   );
 });
+
+it("keeps the footer slide list intrinsic while adding horizontal breathing room", () => {
+  const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
+
+  expect(styleCss).toMatch(/\.slide-list-popover\s*\{[^}]*width:\s*fit-content;/s);
+  expect(styleCss).not.toMatch(/\.slide-list-popover\s*\{[^}]*min-width:/s);
+  expect(styleCss).toMatch(
+    /\.slide-list-popover\s*\{[^}]*padding:\s*0\.35rem 0\.2rem 0\.35rem 0;/s,
+  );
+  expect(styleCss).toMatch(/\.slide-list-scroll-region\s*\{[^}]*width:\s*fit-content;/s);
+  expect(styleCss).toMatch(
+    /\.slide-list-scroll-region\s*\{[^}]*padding:\s*0\.15rem 0\.7rem 0\.15rem 0\.75rem;/s,
+  );
+  expect(styleCss).toMatch(/\.slide-list-button\s*\{[^}]*padding:\s*0\.7rem 1\.1rem;/s);
+});
+
+it("keeps the footer slide list scrollbar track transparent", () => {
+  const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
+
+  expect(styleCss).toMatch(
+    /\.slide-list-scroll-region\s*\{[^}]*scrollbar-color:\s*color-mix\(in srgb, var\(--text-main\) 24%, transparent\)\s+transparent;/s,
+  );
+  expect(styleCss).toMatch(
+    /\.slide-list-scroll-region::\-webkit-scrollbar-track\s*\{[^}]*background:\s*transparent;/s,
+  );
+  expect(styleCss).toMatch(
+    /\.slide-list-scroll-region::\-webkit-scrollbar-thumb\s*\{[^}]*background-color:\s*color-mix\(in srgb, var\(--text-main\) 24%, transparent\);/s,
+  );
+});
+
+it("clips the footer slide list with a separate inner scroll region", () => {
+  const appTsx = readFileSync(path.resolve(process.cwd(), "src/App.tsx"), "utf8");
+  const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
+
+  expect(appTsx).toContain('className="slide-list-scroll-region"');
+  expect(styleCss).toMatch(/\.slide-list-popover\s*\{[^}]*overflow:\s*hidden;/s);
+  expect(styleCss).toMatch(
+    /\.slide-list-scroll-region\s*\{[^}]*max-height:\s*min\(14rem, 52vh\);[^}]*overflow-y:\s*auto;/s,
+  );
+  expect(styleCss).toMatch(
+    /\.slide-list-scroll-region\s*\{[^}]*scrollbar-gutter:\s*stable;/s,
+  );
+  expect(styleCss).toMatch(
+    /\.slide-list-scroll-region\s*\{[^}]*padding:\s*0\.15rem 0\.7rem 0\.15rem 0\.75rem;/s,
+  );
+});
+
+it("gives the right footer page control more spacing and a clearer edit state", () => {
+  const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
+
+  expect(styleCss).toMatch(/\.slide-counter-display\s*\{[^}]*align-items:\s*baseline;[^}]*gap:\s*0\.45rem;/s);
+  expect(styleCss).toMatch(/\.slide-counter-shell\s*\{[^}]*font-variant-numeric:\s*tabular-nums;/s);
+  expect(styleCss).toMatch(/\.slide-counter-trigger\s*\{[^}]*min-height:\s*1\.65rem;[^}]*padding:\s*0\.08rem 0\.18rem 0\.12rem;/s);
+  expect(styleCss).toMatch(
+    /\.slide-counter-trigger\s*\{[^}]*border:\s*none;[^}]*border-bottom:\s*0\.08em solid\s+color-mix\(in srgb, var\(--text-main\) 24%, transparent\);/s,
+  );
+  expect(styleCss).toMatch(/\.slide-counter-trigger\s*\{[^}]*border-radius:\s*0;/s);
+  expect(styleCss).toMatch(/\.slide-counter-trigger\s*\{[^}]*background:\s*none;/s);
+  expect(styleCss).toMatch(
+    /\.slide-counter-trigger:hover,\s*\.slide-counter-trigger:focus-visible\s*\{[^}]*border-color:\s*var\(--accent\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.page-jump-input\s*\{[^}]*border:\s*none;[^}]*border-bottom:\s*0\.08em solid var\(--accent\);/s,
+  );
+  expect(styleCss).toMatch(/\.page-jump-input\s*\{[^}]*border-radius:\s*0;/s);
+  expect(styleCss).toMatch(/\.page-jump-input\s*\{[^}]*background:\s*transparent;/s);
+  expect(styleCss).not.toMatch(
+    /\.slide-list-button:focus-visible,\s*\.slide-counter-trigger:focus-visible,\s*\.page-jump-input:focus-visible\s*\{[^}]*box-shadow:\s*0 0 0 3px/s,
+  );
+  expect(styleCss).toMatch(/\.slide-counter-divider\s*\{[^}]*color:\s*color-mix\(in srgb, var\(--text-main\) 46%, transparent\);/s);
+  expect(styleCss).toMatch(/\.slide-counter-total\s*\{[^}]*color:\s*color-mix\(in srgb, var\(--text-main\) 72%, transparent\);/s);
+});
+
+it("shows the left footer chevron as upward by default and downward when the list is open", () => {
+  const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
+
+  expect(styleCss).toMatch(/\.current-section-chevron\s*\{[^}]*transform:\s*rotate\(180deg\);/s);
+  expect(styleCss).toMatch(
+    /\.current-section-trigger\.is-open\s+\.current-section-chevron\s*\{[^}]*transform:\s*rotate\(0deg\);/s,
+  );
+});

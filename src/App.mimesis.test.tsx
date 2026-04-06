@@ -49,7 +49,11 @@ it("renders one mimesis demo per detail slide and mounts only the active impleme
 
   expect(document.querySelector("iframe")).toBeNull();
   expect(screen.queryByText("page-curl-demo")).not.toBeInTheDocument();
-  expect(screen.getByText(`1 / ${slides.length}`)).toBeInTheDocument();
+  expect(screen.getByText("1", { selector: "#slide-counter-current" })).toBeInTheDocument();
+  expect(screen.getByText("/", { selector: "#slide-counter-divider" })).toBeInTheDocument();
+  expect(
+    screen.getByText(String(slides.length), { selector: "#slide-counter-total" }),
+  ).toBeInTheDocument();
 
   fireEvent.keyDown(document, { key: "ArrowRight" });
   fireEvent.keyDown(document, { key: "ArrowRight" });

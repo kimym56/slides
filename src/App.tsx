@@ -13,6 +13,10 @@ function isDemoInteractionTarget(target: EventTarget | null) {
   return target instanceof Element && Boolean(target.closest("[data-demo-interaction-zone]"));
 }
 
+function isNavigationInteractionTarget(target: EventTarget | null) {
+  return target instanceof Element && Boolean(target.closest("[data-nav-interaction-zone]"));
+}
+
 function isEditableTarget(target: EventTarget | null) {
   if (!(target instanceof HTMLElement)) {
     return false;
@@ -30,29 +34,39 @@ const deckChromeCopy = {
     keyboardHelpAction: "next",
     keyboardHelpFullscreen: "full screen",
     keyboardHelpNavigate: "navigate",
+    jumpToPage: "Jump to page",
     languageLabel: "Language",
     navigationLabel: "Slide navigation",
     nextSlide: "Next slide",
     previousSlide: "Previous slide",
+    slideListLabel: "Slide list",
   },
   ko: {
     keyboardHelpAction: "다음",
     keyboardHelpFullscreen: "전체 화면",
     keyboardHelpNavigate: "이동",
+    jumpToPage: "페이지 이동",
     languageLabel: "언어",
     navigationLabel: "슬라이드 탐색",
     nextSlide: "다음 슬라이드",
     previousSlide: "이전 슬라이드",
+    slideListLabel: "슬라이드 목록",
   },
 } satisfies Record<Locale, {
   keyboardHelpAction: string;
   keyboardHelpFullscreen: string;
   keyboardHelpNavigate: string;
+  jumpToPage: string;
   languageLabel: string;
   navigationLabel: string;
   nextSlide: string;
   previousSlide: string;
+  slideListLabel: string;
 }>;
+
+function clampSlideIndex(index: number, totalSlides: number) {
+  return Math.min(Math.max(index, 0), totalSlides - 1);
+}
 
 function normalizePathname(pathname: string) {
   const normalizedPath = pathname.length > 1 ? pathname.replace(/\/+$/, "") : pathname;
@@ -120,9 +134,46 @@ export default function App() {
   const slides = getSlides(locale);
   const chromeCopy = deckChromeCopy[locale];
   const [currentSlide, setCurrentSlide] = useState(0);
+  const [isSlideListOpen, setIsSlideListOpen] = useState(false);
+  const [isPageJumpOpen, setIsPageJumpOpen] = useState(false);
+  const [pageJumpValue, setPageJumpValue] = useState("1");
   const totalSlides = slides.length;
+  const slideCounterSlotWidth = `calc(${Math.max(String(totalSlides).length, 1)}ch + 0.95rem)`;
   const progress = totalSlides > 1 ? (currentSlide / (totalSlides - 1)) * 100 : 0;
   const wheelThrottleRef = useRef<number | null>(null);
+  const slideListRef = useRef<HTMLDivElement | null>(null);
+  const slideListTriggerRef = useRef<HTMLButtonElement | null>(null);
+  const pageJumpInputRef = useRef<HTMLInputElement | null>(null);
+
+  const closeFooterTools = () => {
+    setIsSlideListOpen(false);
+    setIsPageJumpOpen(false);
+  };
+
+  const syncPageJumpValue = (slideIndex: number) => {
+    setPageJumpValue(String(slideIndex + 1));
+  };
+
+  const navigateToSlide = (slideIndex: number) => {
+    const nextSlideIndex = clampSlideIndex(slideIndex, totalSlides);
+
+    setCurrentSlide(nextSlideIndex);
+    closeFooterTools();
+    syncPageJumpValue(nextSlideIndex);
+  };
+
+  const submitPageJump = () => {
+    const parsedPage = Number.parseInt(pageJumpValue.trim(), 10);
+
+    closeFooterTools();
+
+    if (Number.isNaN(parsedPage)) {
+      syncPageJumpValue(currentSlide);
+      return;
+    }
+
+    navigateToSlide(parsedPage - 1);
+  };
 
   useEffect(() => {
     preloadMimesisSlideAssets();
@@ -145,6 +196,11 @@ export default function App() {
   useEffect(() => {
     document.documentElement.lang = locale;
   }, [locale]);
+
+  useEffect(() => {
+    closeFooterTools();
+    syncPageJumpValue(currentSlide);
+  }, [currentSlide]);
 
   useEffect(() => {
     if (isPdfExport) {
@@ -188,6 +244,7 @@ export default function App() {
       if (
         isDemoInteractionTarget(event.target)
         || isEditableTarget(event.target)
+        || isNavigationInteractionTarget(event.target)
         || isDemoInteractionTarget(document.activeElement)
       ) {
         return;
@@ -218,7 +275,11 @@ export default function App() {
         return;
       }
 
-      if (isDemoInteractionTarget(event.target)) {
+      if (
+        isDemoInteractionTarget(event.target)
+        || isEditableTarget(event.target)
+        || isNavigationInteractionTarget(event.target)
+      ) {
         return;
       }
 
@@ -246,6 +307,44 @@ export default function App() {
       document.removeEventListener("wheel", onWheel);
     };
   }, [isPdfExport, totalSlides]);
+
+  useEffect(() => {
+    if (!isSlideListOpen) {
+      return;
+    }
+
+    const onPointerDown = (event: PointerEvent) => {
+      const target = event.target;
+
+      if (!(target instanceof Node)) {
+        return;
+      }
+
+      if (
+        slideListRef.current?.contains(target)
+        || slideListTriggerRef.current?.contains(target)
+      ) {
+        return;
+      }
+
+      setIsSlideListOpen(false);
+    };
+
+    document.addEventListener("pointerdown", onPointerDown);
+
+    return () => {
+      document.removeEventListener("pointerdown", onPointerDown);
+    };
+  }, [isSlideListOpen]);
+
+  useEffect(() => {
+    if (!isPageJumpOpen) {
+      return;
+    }
+
+    pageJumpInputRef.current?.focus();
+    pageJumpInputRef.current?.select();
+  }, [isPageJumpOpen]);
 
   return (
     <>
@@ -293,22 +392,92 @@ export default function App() {
           </div>
 
           <nav className="slider-nav" aria-label={chromeCopy.navigationLabel}>
-            <div className="current-section-label" id="current-section">
-              {slides[currentSlide]?.title}
+            <div className="current-section-shell" data-nav-interaction-zone="">
+              <button
+                ref={slideListTriggerRef}
+                id="current-section"
+                className={`current-section-label current-section-trigger ${isSlideListOpen ? "is-open" : ""}`.trim()}
+                aria-expanded={isSlideListOpen}
+                aria-haspopup="dialog"
+                aria-controls="slide-list-popover"
+                onClick={() => {
+                  const nextValue = !isSlideListOpen;
+
+                  if (nextValue) {
+                    setIsPageJumpOpen(false);
+                  }
+
+                  setIsSlideListOpen(nextValue);
+                }}
+                type="button"
+              >
+                <span className="current-section-text">{slides[currentSlide]?.title}</span>
+                <svg
+                  aria-hidden="true"
+                  className="current-section-chevron"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M3.5 6 8 10.5 12.5 6"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="1.6"
+                  />
+                </svg>
+              </button>
+
+              {isSlideListOpen ? (
+                <div
+                  ref={slideListRef}
+                  id="slide-list-popover"
+                  className="slide-list-popover"
+                  aria-label={chromeCopy.slideListLabel}
+                  onKeyDown={(event) => {
+                    if (event.key !== "Escape") {
+                      return;
+                    }
+
+                    setIsSlideListOpen(false);
+                    slideListTriggerRef.current?.focus();
+                  }}
+                  role="dialog"
+                >
+                  <div className="slide-list-scroll-region">
+                    <ol className="slide-list">
+                      {slides.map((slide, index) => (
+                        <li key={slide.id} className="slide-list-item">
+                          <button
+                            className={`slide-list-button ${index === currentSlide ? "is-active" : ""}`.trim()}
+                            onClick={() => {
+                              navigateToSlide(index);
+                            }}
+                            type="button"
+                          >
+                            <span className="slide-list-number">{index + 1}</span>
+                            <span className="slide-list-title">{slide.title}</span>
+                          </button>
+                        </li>
+                      ))}
+                    </ol>
+                  </div>
+                </div>
+              ) : null}
             </div>
             <div className={`keyboard-help ${currentSlide >= 2 ? "hidden" : ""}`}>
               <kbd>Space</kbd> {chromeCopy.keyboardHelpAction} &middot; <kbd>&larr;</kbd>
               <kbd>&rarr;</kbd> {chromeCopy.keyboardHelpNavigate} &middot; <kbd>F</kbd>{" "}
               {chromeCopy.keyboardHelpFullscreen}
             </div>
-            <div className="controls">
+            <div className="controls" data-nav-interaction-zone="">
               <button
                 id="btn-prev"
                 className="nav-btn"
                 aria-label={chromeCopy.previousSlide}
                 disabled={currentSlide === 0}
                 onClick={() => {
-                  setCurrentSlide((current) => Math.max(current - 1, 0));
+                  navigateToSlide(currentSlide - 1);
                 }}
                 type="button"
               >
@@ -323,14 +492,78 @@ export default function App() {
                   <path d="M15 18l-6-6 6-6" />
                 </svg>
               </button>
-              <span id="slide-counter">{currentSlide + 1} / {totalSlides}</span>
+              <div className="slide-counter-shell">
+                <div className="slide-counter-display" id="slide-counter">
+                  <div
+                    className="slide-counter-current-slot"
+                    style={{ width: slideCounterSlotWidth }}
+                  >
+                    {isPageJumpOpen ? (
+                      <input
+                        autoComplete="off"
+                        enterKeyHint="go"
+                        ref={pageJumpInputRef}
+                        aria-label={chromeCopy.jumpToPage}
+                        className="page-jump-input"
+                        id="slide-counter-current-input"
+                        inputMode="numeric"
+                        name="page"
+                        onBlur={() => {
+                          submitPageJump();
+                        }}
+                        onChange={(event) => {
+                          setPageJumpValue(event.target.value.replace(/\D+/g, ""));
+                        }}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter") {
+                            event.preventDefault();
+                            submitPageJump();
+                            return;
+                          }
+
+                          if (event.key !== "Escape") {
+                            return;
+                          }
+
+                          event.preventDefault();
+                          closeFooterTools();
+                          syncPageJumpValue(currentSlide);
+                        }}
+                        spellCheck={false}
+                        type="text"
+                        value={pageJumpValue}
+                      />
+                    ) : (
+                      <button
+                        aria-label={chromeCopy.jumpToPage}
+                        className="slide-counter-trigger"
+                        id="slide-counter-current"
+                        onClick={() => {
+                          setIsSlideListOpen(false);
+                          setIsPageJumpOpen(true);
+                          syncPageJumpValue(currentSlide);
+                        }}
+                        type="button"
+                      >
+                        {currentSlide + 1}
+                      </button>
+                    )}
+                  </div>
+                  <span className="slide-counter-divider" id="slide-counter-divider">
+                    {" / "}
+                  </span>
+                  <span className="slide-counter-total" id="slide-counter-total">
+                    {totalSlides}
+                  </span>
+                </div>
+              </div>
               <button
                 id="btn-next"
                 className="nav-btn"
                 aria-label={chromeCopy.nextSlide}
                 disabled={currentSlide === totalSlides - 1}
                 onClick={() => {
-                  setCurrentSlide((current) => Math.min(current + 1, totalSlides - 1));
+                  navigateToSlide(currentSlide + 1);
                 }}
                 type="button"
               >
