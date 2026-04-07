@@ -26,6 +26,51 @@ it("keeps the first slide hero centered while leaving locale switching to separa
   expect(styleCss).not.toContain(".hero-subtext span");
 });
 
+it("styles the first-slide hero title as a hand-tuned wordmark", () => {
+  const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
+
+  expect(styleCss).toContain(".hero-wordmark {");
+  expect(styleCss).toMatch(/\.hero-wordmark-char\s*\{[^}]*display:\s*inline-block;/s);
+  expect(styleCss).toContain(".hero-wordmark--en .hero-wordmark-char--en-p");
+  expect(styleCss).toContain(".hero-wordmark--ko .hero-wordmark-char--ko-po");
+  expect(styleCss).toMatch(/h1\.hero-title\s*\{[^}]*letter-spacing:\s*0;/s);
+  expect(styleCss).toContain("--hero-wordmark-en-p-gap: 0em;");
+  expect(styleCss).toContain("--hero-wordmark-en-r-gap: 0.038em;");
+  expect(styleCss).toContain("--hero-wordmark-en-l-gap: -0.044em;");
+  expect(styleCss).toContain("--hero-wordmark-ko-po-gap: 0.025em;");
+  expect(styleCss).toContain("--hero-wordmark-ko-teu-gap: 0.025em;");
+  expect(styleCss).toContain("--hero-wordmark-ko-pol-gap: -0.025em;");
+  expect(styleCss).toContain("--hero-wordmark-ko-ri-gap: -0.044em;");
+  expect(styleCss).not.toContain(".hero-wordmark-gui-host");
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-p\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-p-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-o1\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-o1-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-r\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-r-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-t\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-t-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-f\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-f-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-o2\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-o2-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-l\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-l-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--en\s+\.hero-wordmark-char--en-i\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-en-i-gap\);/s,
+  );
+  expect(styleCss).toMatch(
+    /\.hero-wordmark--ko\s+\.hero-wordmark-char--ko-po\s*\{[^}]*margin-right:\s*var\(--hero-wordmark-ko-po-gap\);/s,
+  );
+});
+
 it("keeps the second slide introduction layout in its original lightweight style", () => {
   const styleCss = readFileSync(path.resolve(process.cwd(), "style.css"), "utf8");
 

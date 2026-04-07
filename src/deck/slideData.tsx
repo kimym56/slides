@@ -48,6 +48,51 @@ interface ProjectOverviewSlideOptions {
   techStack: string[];
 }
 
+const heroWordmarkCharacters: Record<
+  Locale,
+  Array<{ char: string; className: string }>
+> = {
+  en: [
+    { char: "P", className: "hero-wordmark-char--en-p" },
+    { char: "o", className: "hero-wordmark-char--en-o1" },
+    { char: "r", className: "hero-wordmark-char--en-r" },
+    { char: "t", className: "hero-wordmark-char--en-t" },
+    { char: "f", className: "hero-wordmark-char--en-f" },
+    { char: "o", className: "hero-wordmark-char--en-o2" },
+    { char: "l", className: "hero-wordmark-char--en-l" },
+    { char: "i", className: "hero-wordmark-char--en-i" },
+    { char: "o", className: "hero-wordmark-char--en-o3" },
+  ],
+  ko: [
+    { char: "포", className: "hero-wordmark-char--ko-po" },
+    { char: "트", className: "hero-wordmark-char--ko-teu" },
+    { char: "폴", className: "hero-wordmark-char--ko-pol" },
+    { char: "리", className: "hero-wordmark-char--ko-ri" },
+    { char: "오", className: "hero-wordmark-char--ko-o" },
+  ],
+};
+
+function renderHeroWordmark(locale: Locale, title: string) {
+  const characters = heroWordmarkCharacters[locale];
+
+  if (characters.map((entry) => entry.char).join("") !== title) {
+    return title;
+  }
+
+  return (
+    <span className={`hero-wordmark hero-wordmark--${locale}`}>
+      {characters.map(({ char, className }, index) => (
+        <span
+          key={`${locale}-${className}-${index}`}
+          className={`hero-wordmark-char ${className}`}
+        >
+          {char}
+        </span>
+      ))}
+    </span>
+  );
+}
+
 function renderStructuredDetailsCopy(
   detailTitle: string,
   descriptions: ReactNode[],
@@ -219,7 +264,9 @@ export function getSlides(locale: Locale): SlideDefinition[] {
       title: copy.portfolio.title,
       render: () => (
         <div className="hero-center-content">
-          <h1 className="hero-title stagger-1">{copy.portfolio.heroTitle}</h1>
+          <h1 className="hero-title stagger-1">
+            {renderHeroWordmark(locale, copy.portfolio.heroTitle)}
+          </h1>
           <div className="hero-subtext stagger-2">
             <span>{copy.portfolio.heroSubtitle}</span>
             <span>{copy.portfolio.year}</span>

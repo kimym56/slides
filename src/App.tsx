@@ -123,6 +123,10 @@ function getLocalePath(locale: Locale) {
   return localePaths[locale];
 }
 
+function getLocaleHref(locale: Locale, search: string) {
+  return `${getLocalePath(locale)}${search}`;
+}
+
 function isPdfExportSearch(search: string) {
   return new URLSearchParams(search).get("export") === "pdf";
 }
@@ -130,6 +134,7 @@ function isPdfExportSearch(search: string) {
 export default function App() {
   const [resolvedRoute] = useState(() => resolveLocaleRoute(window.location.pathname));
   const locale = resolvedRoute.locale;
+  const currentSearch = window.location.search;
   const isPdfExport = isPdfExportSearch(window.location.search);
   const slides = getSlides(locale);
   const chromeCopy = deckChromeCopy[locale];
@@ -366,7 +371,7 @@ export default function App() {
           {currentSlide === 0 ? (
             <nav className="locale-toggle" aria-label={chromeCopy.languageLabel}>
               <a
-                href={getLocalePath("en")}
+                href={getLocaleHref("en", currentSearch)}
                 className={`locale-toggle-link ${locale === "en" ? "is-active" : ""}`.trim()}
                 aria-current={locale === "en" ? "page" : undefined}
               >
@@ -374,7 +379,7 @@ export default function App() {
               </a>
               <span className="locale-toggle-divider">/</span>
               <a
-                href={getLocalePath("ko")}
+                href={getLocaleHref("ko", currentSearch)}
                 className={`locale-toggle-link ${locale === "ko" ? "is-active" : ""}`.trim()}
                 aria-current={locale === "ko" ? "page" : undefined}
               >

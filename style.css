@@ -22,6 +22,20 @@
 
   /* Spacing & Layout */
   --slide-padding: clamp(2rem, 5vw, 6rem);
+
+  /* Hero wordmark spacing */
+  --hero-wordmark-en-p-gap: 0em;
+  --hero-wordmark-en-o1-gap: -0.025em;
+  --hero-wordmark-en-r-gap: 0.038em;
+  --hero-wordmark-en-t-gap: 0.025em;
+  --hero-wordmark-en-f-gap: 0em;
+  --hero-wordmark-en-o2-gap: -0.025em;
+  --hero-wordmark-en-l-gap: -0.044em;
+  --hero-wordmark-en-i-gap: -0.025em;
+  --hero-wordmark-ko-po-gap: 0.025em;
+  --hero-wordmark-ko-teu-gap: 0.025em;
+  --hero-wordmark-ko-pol-gap: -0.025em;
+  --hero-wordmark-ko-ri-gap: -0.044em;
 }
 
 html[lang="ko"] {
@@ -118,10 +132,70 @@ body {
 h1.hero-title {
   font-size: clamp(4rem, 12vw, 10rem);
   font-weight: 800;
-  letter-spacing: -0.04em;
+  font-kerning: none;
+  letter-spacing: 0;
   margin-bottom: 0;
   line-height: 1.1;
   text-align: center;
+}
+
+.hero-wordmark {
+  display: inline-flex;
+  align-items: baseline;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.hero-wordmark-char {
+  display: inline-block;
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-p {
+  margin-right: var(--hero-wordmark-en-p-gap);
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-o1 {
+  margin-right: var(--hero-wordmark-en-o1-gap);
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-r {
+  margin-right: var(--hero-wordmark-en-r-gap);
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-t {
+  margin-right: var(--hero-wordmark-en-t-gap);
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-f {
+  margin-right: var(--hero-wordmark-en-f-gap);
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-o2 {
+  margin-right: var(--hero-wordmark-en-o2-gap);
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-l {
+  margin-right: var(--hero-wordmark-en-l-gap);
+}
+
+.hero-wordmark--en .hero-wordmark-char--en-i {
+  margin-right: var(--hero-wordmark-en-i-gap);
+}
+
+.hero-wordmark--ko .hero-wordmark-char--ko-po {
+  margin-right: var(--hero-wordmark-ko-po-gap);
+}
+
+.hero-wordmark--ko .hero-wordmark-char--ko-teu {
+  margin-right: var(--hero-wordmark-ko-teu-gap);
+}
+
+.hero-wordmark--ko .hero-wordmark-char--ko-pol {
+  margin-right: var(--hero-wordmark-ko-pol-gap);
+}
+
+.hero-wordmark--ko .hero-wordmark-char--ko-ri {
+  margin-right: var(--hero-wordmark-ko-ri-gap);
 }
 
 .hero-center-content {

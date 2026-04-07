@@ -84,3 +84,37 @@ it("renders all Korean slides and hides deck chrome in pdf export mode", () => {
   expect(screen.queryByLabelText("다음 슬라이드")).not.toBeInTheDocument();
   expect(screen.queryByText("1", { selector: "#slide-counter-current" })).not.toBeInTheDocument();
 });
+
+it("does not mount hero wordmark tuning controls when search params are present", () => {
+  window.history.replaceState({}, "", "/en?preview=1");
+
+  render(<App />);
+
+  expect(document.querySelector(".hero-wordmark-gui-host")).toBeNull();
+  expect(
+    document.documentElement.style.getPropertyValue("--hero-wordmark-en-p-gap"),
+  ).toBe("");
+});
+
+it("does not mount hero wordmark tuning controls in development", () => {
+  window.history.replaceState({}, "", "/en");
+
+  render(<App />);
+
+  expect(document.querySelector(".hero-wordmark-gui-host")).toBeNull();
+});
+
+it("keeps the current search params on the locale toggle", () => {
+  window.history.replaceState({}, "", "/en?preview=1");
+
+  render(<App />);
+
+  expect(screen.getByRole("link", { name: "EN" })).toHaveAttribute(
+    "href",
+    "/en?preview=1",
+  );
+  expect(screen.getByRole("link", { name: "KR" })).toHaveAttribute(
+    "href",
+    "/kr?preview=1",
+  );
+});

@@ -22,6 +22,45 @@ describe("slide deck data", () => {
     ]);
   });
 
+  it("renders the first slide hero title as locale-specific wordmark markup", () => {
+    const englishHeroSlide = getSlides("en").find((entry) => entry.id === "slide-1");
+
+    expect(englishHeroSlide).toBeDefined();
+
+    const { container, unmount } = render(
+      <>{englishHeroSlide?.render({ isActive: true })}</>,
+    );
+
+    const englishHeading = screen.getByRole("heading", {
+      level: 1,
+      name: "Portfolio",
+    });
+
+    expect(englishHeading).toHaveClass("hero-title");
+    expect(container.querySelector(".hero-wordmark")).toBeInTheDocument();
+    expect(container.querySelectorAll(".hero-wordmark-char")).toHaveLength(9);
+    expect(container.querySelector(".hero-wordmark--en")).toBeInTheDocument();
+
+    unmount();
+
+    const koreanHeroSlide = getSlides("ko").find((entry) => entry.id === "slide-1");
+
+    expect(koreanHeroSlide).toBeDefined();
+
+    const { container: koreanContainer } = render(
+      <>{koreanHeroSlide?.render({ isActive: true })}</>,
+    );
+
+    const koreanHeading = screen.getByRole("heading", {
+      level: 1,
+      name: "포트폴리오",
+    });
+
+    expect(koreanHeading).toHaveClass("hero-title");
+    expect(koreanContainer.querySelector(".hero-wordmark--ko")).toBeInTheDocument();
+    expect(koreanContainer.querySelectorAll(".hero-wordmark-char")).toHaveLength(5);
+  });
+
   it("renders linked project URLs on the overview slides", () => {
     const overviewSlides = [
       {
