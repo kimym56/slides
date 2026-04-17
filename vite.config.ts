@@ -108,6 +108,7 @@ export default defineConfig(({ mode }) => ({
         "drei",
       ),
       "framer-motion": path.join(slidesNodeModules, "framer-motion"),
+      "lil-gui": path.join(slidesNodeModules, "lil-gui"),
       react: path.join(slidesNodeModules, "react"),
       "react/jsx-runtime": path.join(
         slidesNodeModules,

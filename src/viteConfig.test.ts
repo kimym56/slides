@@ -79,6 +79,9 @@ it("pins the shared runtime entrypoints to slides' node_modules", () => {
   expect(alias.get("framer-motion")).toContain(
     path.join(slidesNodeModules, "framer-motion"),
   );
+  expect(alias.get("lil-gui")).toContain(
+    path.join(slidesNodeModules, "lil-gui"),
+  );
   expect(alias.get("react")).toContain(
     path.join(slidesNodeModules, "react"),
   );
